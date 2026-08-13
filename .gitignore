@@ -3,3 +3,4 @@ dist/
 .env
 .env.*
 apps/pocketbase/pb_data/
+.claude/settings.local.json
