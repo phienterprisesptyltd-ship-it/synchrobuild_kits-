@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* Floor Plan Visual Styles */
+  .fp-wall {
+    @apply fill-slate-800;
+  }
+  .fp-room {
+    @apply fill-slate-100 stroke-slate-300 stroke-2 transition-colors duration-300;
+  }
+  .fp-room:hover {
+    @apply fill-blue-50 stroke-blue-300;
+  }
+  .fp-text {
+    @apply fill-slate-600 font-medium text-[12px] select-none pointer-events-none;
+    font-family: 'Outfit', sans-serif;
+  }
+  .fp-text-large {
+    @apply fill-slate-800 font-bold text-[16px] select-none pointer-events-none;
+    font-family: 'Outfit', sans-serif;
+  }
+  .fp-door {
+    @apply stroke-blue-400 stroke-2 fill-none;
+  }
+  .fp-window {
+    @apply stroke-sky-300 stroke-[4] fill-none;
+  }
+  .fp-dimension {
+    @apply fill-slate-400 text-[10px] select-none pointer-events-none;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* Lightbox Styles */
+  .lightbox-overlay {
+    @apply fixed inset-0 z-[100] bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8;
+  }
+  .lightbox-close {
+    @apply absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 rounded-full p-2 transition-all duration-300 z-[101];
+  }
+  .lightbox-content {
+    @apply relative w-full h-full max-w-7xl mx-auto flex items-center justify-center pointer-events-none;
+  }
+  .lightbox-image {
+    @apply max-w-full max-h-full object-contain rounded-lg pointer-events-auto shadow-2xl ring-1 ring-white/10;
+  }
+
+  /* Chat Component Styles */
+  .chat-widget-window {
+    @apply bg-white border border-slate-200 shadow-2xl rounded-2xl overflow-hidden flex flex-col;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15), 0 0 20px -5px rgba(0,0,0,0.05);
+  }
+  .chat-bubble-customer {
+    @apply bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] shadow-sm;
+  }
+  .chat-bubble-admin {
+    @apply bg-white text-slate-800 border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%] shadow-sm;
+  }
+  .chat-bubble-customer-dash {
+    @apply bg-white text-slate-800 border border-slate-200 rounded-2xl rounded-tl-sm px-5 py-3 shadow-sm;
+  }
+  .chat-bubble-admin-dash {
+    @apply bg-blue-600 text-white rounded-2xl rounded-tr-sm px-5 py-3 shadow-sm;
+  }
+}
