@@ -114,7 +114,10 @@ const AdminChatDashboard = () => {
     try {
       const res = await apiServerClient.fetch('/chat/admin/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${pb.authStore.token}`
+        },
         body: JSON.stringify(payload)
       });
 
