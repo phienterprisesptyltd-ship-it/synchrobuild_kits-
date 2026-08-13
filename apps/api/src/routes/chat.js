@@ -1,6 +1,7 @@
 import express from 'express';
 import pb from '../utils/pocketbaseClient.js';
 import logger from '../utils/logger.js';
+import { adminAuthMiddleware } from '../middleware/admin-auth.js';
 
 const router = express.Router();
 
@@ -54,39 +55,42 @@ router.post('/messages', async (req, res) => {
   });
 });
 
-// GET /chat/messages - Fetch messages for a session or all sessions
+// GET /chat/messages?sessionId=... - Fetch messages for a single session (public, session-scoped)
 router.get('/messages', async (req, res) => {
   const { sessionId } = req.query;
 
-  if (sessionId) {
-    // Fetch messages for specific session
-    logger.info(`Fetching messages for sessionId: ${sessionId}`);
-
-    const messages = await pb.collection('chat_messages').getList(1, 100, {
-      filter: 'sessionId="' + sessionId + '"',
-      sort: 'createdAt',
-    });
-
-    logger.info(`Retrieved ${messages.items.length} messages for sessionId: ${sessionId}`);
-
-    // Return array directly, NOT wrapped in object
-    res.json(messages.items);
-  } else {
-    // Fetch all sessions
-    logger.info('Fetching all sessions');
-
-    const sessions = await pb.collection('chat_sessions').getList(1, 100, {
-      sort: '-lastMessageAt',
-    });
-
-    logger.info(`Retrieved ${sessions.items.length} sessions`);
-
-    res.json({ sessions: sessions.items });
+  if (!sessionId || typeof sessionId !== 'string' || sessionId.trim() === '') {
+    return res.status(400).json({ error: 'Missing or invalid required query parameter: sessionId' });
   }
+
+  logger.info(`Fetching messages for sessionId: ${sessionId}`);
+
+  const messages = await pb.collection('chat_messages').getList(1, 100, {
+    filter: 'sessionId="' + sessionId + '"',
+    sort: 'createdAt',
+  });
+
+  logger.info(`Retrieved ${messages.items.length} messages for sessionId: ${sessionId}`);
+
+  // Return array directly, NOT wrapped in object
+  res.json(messages.items);
 });
 
-// POST /chat/admin/messages - Admin reply to a session
-router.post('/admin/messages', async (req, res) => {
+// GET /chat/admin/sessions - List all chat sessions (admin only)
+router.get('/admin/sessions', adminAuthMiddleware, async (req, res) => {
+  logger.info('Fetching all sessions');
+
+  const sessions = await pb.collection('chat_sessions').getList(1, 100, {
+    sort: '-lastMessageAt',
+  });
+
+  logger.info(`Retrieved ${sessions.items.length} sessions`);
+
+  res.json({ sessions: sessions.items });
+});
+
+// POST /chat/admin/messages - Admin reply to a session (admin only)
+router.post('/admin/messages', adminAuthMiddleware, async (req, res) => {
   const { sessionId, message } = req.body;
 
   // Validate both fields
