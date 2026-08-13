@@ -28,21 +28,12 @@ const projects = defineCollection({
 	}),
 });
 
-const testimonials = defineCollection({
-	loader: glob({ pattern: '**/*.json', base: './src/content/testimonials' }),
-	schema: z.object({
-		name: z.string(),
-		rating: z.number().min(1).max(5),
-		quote: z.string(),
-		project: z.string(),
-		avatar: z.string().url(),
-		verified: z.boolean().default(false),
-	}),
-});
-
 const config = defineCollection({
 	loader: glob({ pattern: '**/*.json', base: './src/content/config' }),
 	schema: z.record(z.string(), z.any()),
 });
 
-export const collections = { floorPlans, projects, testimonials, config };
+// No `testimonials` collection: the old ones were stock-photo/sample
+// content, not real customers. See examples/sample-testimonials/README.md.
+
+export const collections = { floorPlans, projects, config };

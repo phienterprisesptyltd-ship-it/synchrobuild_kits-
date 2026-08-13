@@ -8,7 +8,6 @@ import { getEntry } from 'astro:content';
 export interface Business {
 	name: string;
 	foundedYear: number;
-	logo: string;
 	phone: string;
 	phoneHref: string;
 	emailGeneral: string;

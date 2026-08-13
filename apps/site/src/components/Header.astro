@@ -2,7 +2,6 @@
 interface Props {
 	business: {
 		name: string;
-		logo: string;
 		phone: string;
 		phoneHref: string;
 		nav: { label: string; href: string }[];
@@ -16,8 +15,10 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur-sm">
 	<nav class="container-page flex h-20 items-center justify-between md:h-24">
 		<a href="/" class="flex h-full items-center gap-3 py-2">
-			<img src={business.logo} alt={`${business.name} logo`} class="h-full w-auto object-contain" />
-			<span class="hidden flex-col sm:flex">
+			<span class="text-2xl font-black tracking-tight text-ink-900 sm:text-3xl">
+				Synchro<span class="text-brand-600">Build</span> <span class="font-bold text-ink-500">Kits</span>
+			</span>
+			<span class="hidden flex-col border-l border-ink-200 pl-3 sm:flex">
 				<span class="text-sm font-bold uppercase tracking-widest text-brand-600 leading-none">Family Owned</span>
 				<span class="mt-1 text-sm font-medium text-ink-500">Australian Built</span>
 			</span>

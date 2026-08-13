@@ -15,7 +15,10 @@ interface Props {
 const { title, description, image, noindex = false } = Astro.props;
 const business = await getBusiness();
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image ?? business.logo;
+// No fallback image - there's no real logo/brand image yet (see task
+// "Remove Hostinger CDN logo"). og:image/twitter:image are only emitted
+// when a page passes a real photo (e.g. a floor plan's own image).
+const ogImage = image;
 
 const localBusinessJsonLd = {
 	'@context': 'https://schema.org',
@@ -46,14 +49,14 @@ const localBusinessJsonLd = {
 		<meta property="og:site_name" content={business.name} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={ogImage} />
+		{ogImage && <meta property="og:image" content={ogImage} />}
 		<meta property="og:locale" content="en_AU" />
 		<meta property="og:url" content={canonicalURL} />
 
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={ogImage} />
+		{ogImage && <meta name="twitter:image" content={ogImage} />}
 
 		<script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessJsonLd)} />
 

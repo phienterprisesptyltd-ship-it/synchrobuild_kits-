@@ -5,7 +5,7 @@
 		{ "id": "01", "title": "Pay the fee", "description": "Secure your design package to officially kick off the process." },
 		{ "id": "02", "title": "Interview & Education", "description": "We consult with you extensively, providing money-saving education to optimize your build." },
 		{ "id": "03", "title": "Receive first design", "description": "Get your initial architectural layout and exterior 3D renders based on our consultation." },
-		{ "id": "04", "title": "Make changes", "description": "Two rounds of updates are included. Additional updates are just $45 per revision." },
+		{ "id": "04", "title": "Make changes", "description": "Two rounds of updates are included. Additional revisions are available at a per-revision rate confirmed at consultation." },
 		{ "id": "05", "title": "Price your total kit", "description": "Once the design is finalized, we provide a comprehensive, engineered kit quote." }
 	]
 }

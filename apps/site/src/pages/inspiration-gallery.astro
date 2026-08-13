@@ -2,9 +2,11 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { getBusiness } from '../lib/content';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
+const business = await getBusiness();
 ---
 
 <Layout
@@ -72,8 +74,8 @@ const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
 						<div class="text-ink-700">Custom Designs</div>
 					</div>
 					<div>
-						<div class="mb-2 text-4xl font-bold text-brand-600">500+</div>
-						<div class="text-ink-700">Projects Completed</div>
+						<div class="mb-2 text-4xl font-bold text-brand-600">{business.foundedYear}</div>
+						<div class="text-ink-700">Family Owned Since</div>
 					</div>
 					<div>
 						<div class="mb-2 text-4xl font-bold text-brand-600">5 Days</div>

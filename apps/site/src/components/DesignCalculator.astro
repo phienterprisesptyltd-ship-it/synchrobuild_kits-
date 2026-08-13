@@ -1,11 +1,15 @@
 ---
+// Pricing figures from the old site conflicted with each other ($495 here
+// vs "from $1,500" on the old Inquiry page) and were never confirmed, so
+// this component only shows package/configuration structure - real business
+// content - and never displays a dollar amount. See docs/rebuild-plan.md.
 import { getDesignPackages } from '../lib/content';
 
-const { packages, extraRoomRate, comparableDraftspersonPrice } = await getDesignPackages();
+const { packages } = await getDesignPackages();
 const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? packages[0];
 ---
 
-<div id="design-calculator" class="rounded-3xl border border-ink-200 bg-white p-6 shadow-xl shadow-ink-200/50 lg:p-8" data-extra-room-rate={extraRoomRate}>
+<div id="design-calculator" class="rounded-3xl border border-ink-200 bg-white p-6 shadow-xl shadow-ink-200/50 lg:p-8">
 	<div class="grid gap-8 lg:grid-cols-12 lg:items-start">
 		<div class="lg:col-span-7">
 			<h3 class="mb-2 text-2xl font-bold text-ink-900">Design Your Kit Home</h3>
@@ -33,11 +37,11 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 				<p class="text-sm font-semibold text-ink-900">Select Base Package</p>
 				<div class="grid grid-cols-1 gap-3 sm:grid-cols-3" id="package-options">
 					{
-						packages.map((pkg: { key: string; title: string; beds: number; baths: number; price: number; popular: boolean }) => (
+						packages.map((pkg: { key: string; title: string; beds: number; baths: number; popular: boolean }) => (
 							<button
 								type="button"
 								data-package-key={pkg.key}
-								data-price={pkg.price}
+								data-package-title={pkg.title}
 								class:list={[
 									'package-option relative rounded-xl border p-4 text-left transition-all',
 									pkg.key === defaultPackage.key ? 'border-brand-200 bg-brand-50 ring-1 ring-brand-600' : 'border-ink-200 bg-white hover:border-brand-300',
@@ -49,8 +53,7 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 									</span>
 								)}
 								<p class="mb-1.5 text-sm font-bold text-ink-900">{pkg.title}</p>
-								<p class="mb-2 text-[11px] text-ink-500">{pkg.beds} Bed &middot; {pkg.baths} Bath</p>
-								<p class="text-base font-black text-ink-900">${pkg.price}</p>
+								<p class="text-[11px] text-ink-500">{pkg.beds} Bed &middot; {pkg.baths} Bath</p>
 							</button>
 						))
 					}
@@ -60,24 +63,17 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 				<select id="extra-rooms" class="h-12 w-full rounded-lg border border-ink-200 bg-ink-50 px-3 text-sm outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600">
 					{
 						Array.from({ length: 9 }).map((_, num) => (
-							<option value={num}>{num === 0 ? 'No extra rooms' : `+${num} Extra Room${num > 1 ? 's' : ''} (+$${num * extraRoomRate})`}</option>
+							<option value={num}>{num === 0 ? 'No extra rooms' : `+${num} Extra Room${num > 1 ? 's' : ''}`}</option>
 						))
 					}
 				</select>
 			</div>
 
 			<div class="mt-6 border-t border-ink-100 pt-6">
-				<div class="mb-4 flex items-end justify-between">
-					<div>
-						<p class="mb-1 text-xs font-semibold tracking-wider text-ink-500 uppercase">Your Design Package</p>
-						<p class="text-[11px] text-ink-500">
-							Comparable draftsperson: <span class="text-ink-400 line-through">${comparableDraftspersonPrice}+</span>
-						</p>
-					</div>
-					<div class="flex items-baseline gap-1.5">
-						<span id="total-price" class="text-4xl font-extrabold tracking-tight text-ink-900">${defaultPackage.price}</span>
-						<span class="text-xs font-medium text-ink-500">AUD</span>
-					</div>
+				<div class="mb-4">
+					<p class="mb-1 text-xs font-semibold tracking-wider text-ink-500 uppercase">Your Configuration</p>
+					<p id="config-summary" class="text-lg font-bold text-ink-900">{defaultPackage.title}</p>
+					<p class="mt-1 text-sm text-ink-600">Contact us for current design-service pricing on this configuration.</p>
 				</div>
 
 				<div class="mb-5 rounded-lg border border-brand-100 bg-brand-50 p-3">
@@ -86,12 +82,8 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 					</p>
 				</div>
 
-				<a
-					id="calculator-cta"
-					href="/get-started"
-					class="btn-primary w-full py-3.5 text-base"
-				>
-					<span id="calculator-cta-label">Start My Design – ${defaultPackage.price}</span>
+				<a id="calculator-cta" href="/get-started" class="btn-primary w-full py-3.5 text-base">
+					Get a Quote for This Configuration
 				</a>
 			</div>
 		</div>
@@ -99,23 +91,24 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 </div>
 
 <script>
-	const container = document.getElementById('design-calculator');
-	const extraRoomRate = Number(container?.getAttribute('data-extra-room-rate')) || 30;
-
 	const optionButtons = document.querySelectorAll<HTMLButtonElement>('.package-option');
 	const extraRoomsSelect = document.getElementById('extra-rooms') as HTMLSelectElement;
-	const totalPriceEl = document.getElementById('total-price') as HTMLSpanElement;
-	const ctaLabel = document.getElementById('calculator-cta-label') as HTMLSpanElement;
+	const configSummary = document.getElementById('config-summary') as HTMLParagraphElement;
+	const cta = document.getElementById('calculator-cta') as HTMLAnchorElement;
 
-	let selectedPrice = Number(
-		document.querySelector<HTMLButtonElement>('.package-option.border-brand-200')?.dataset.price ?? 0
-	);
+	function currentPackageTitle(): string {
+		const active = document.querySelector<HTMLButtonElement>(
+			'.package-option.border-brand-200'
+		);
+		return active?.dataset.packageTitle ?? '';
+	}
 
-	function updateTotal() {
+	function updateSummary() {
+		const title = currentPackageTitle();
 		const extraRooms = Number(extraRoomsSelect.value) || 0;
-		const total = selectedPrice + extraRooms * extraRoomRate;
-		totalPriceEl.textContent = `$${total}`;
-		ctaLabel.textContent = `Start My Design – $${total}`;
+		const summary = extraRooms > 0 ? `${title} + ${extraRooms} extra room${extraRooms > 1 ? 's' : ''}` : title;
+		configSummary.textContent = summary;
+		cta.href = `/get-started?pathway=${encodeURIComponent('Custom Design Service')}&plan=${encodeURIComponent(summary)}`;
 	}
 
 	optionButtons.forEach((btn) => {
@@ -126,10 +119,10 @@ const defaultPackage = packages.find((p: { popular: boolean }) => p.popular) ?? 
 			});
 			btn.classList.remove('border-ink-200', 'bg-white');
 			btn.classList.add('border-brand-200', 'bg-brand-50', 'ring-1', 'ring-brand-600');
-			selectedPrice = Number(btn.dataset.price) || 0;
-			updateTotal();
+			updateSummary();
 		});
 	});
 
-	extraRoomsSelect.addEventListener('change', updateTotal);
+	extraRoomsSelect.addEventListener('change', updateSummary);
+	updateSummary();
 </script>
