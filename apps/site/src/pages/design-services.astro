@@ -20,6 +20,9 @@ const designProcess = await getDesignProcess();
 						Designs are based on the land it's going on, its aspect, its features and issues — not based on
 						other floor plans as a template.
 					</p>
+					<!-- TODO(business): old site said "You won't find a cheaper plan
+					     price anywhere else" - an absolute competitive claim we can't
+					     verify. Neutralized below. -->
 					<p class="rounded-xl border border-brand-100 bg-brand-50/50 p-5 text-lg text-ink-600">
 						We keep this efficient and effective through our interview process — contact us for current
 						design-service pricing.
@@ -27,6 +30,10 @@ const designProcess = await getDesignProcess();
 				</div>
 			</div>
 
+			<!-- TODO(business): pricing below intentionally omits dollar figures -
+			     see the calculator's own comment (DesignCalculator.astro) and
+			     docs/rebuild-plan.md for the $495-vs-$1,500 conflict this is
+			     pending on. -->
 			<div class="mx-auto mb-32 max-w-5xl">
 				<div class="mb-12 text-center">
 					<h2 class="mb-4 text-3xl font-bold md:text-4xl">Pricing &amp; Configuration</h2>

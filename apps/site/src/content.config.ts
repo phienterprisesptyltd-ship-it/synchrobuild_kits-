@@ -33,7 +33,22 @@ const config = defineCollection({
 	schema: z.record(z.string(), z.any()),
 });
 
-// No `testimonials` collection: the old ones were stock-photo/sample
-// content, not real customers. See examples/sample-testimonials/README.md.
+// TODO(business): every entry here is currently `placeholder: true` -
+// neutral "testimonial to be added" cards, not real customers. The old
+// stock-photo testimonials are kept as reference (not published) in
+// examples/sample-testimonials/ - do not restore those as real. When real
+// testimonials are available, edit these files: set placeholder to false
+// and fill in name/rating/quote/project/avatar.
+const testimonials = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/testimonials' }),
+	schema: z.object({
+		placeholder: z.boolean().default(true),
+		name: z.string().optional(),
+		rating: z.number().min(1).max(5).optional(),
+		quote: z.string().optional(),
+		project: z.string().optional(),
+		avatar: z.string().url().optional(),
+	}),
+});
 
-export const collections = { floorPlans, projects, config };
+export const collections = { floorPlans, projects, config, testimonials };

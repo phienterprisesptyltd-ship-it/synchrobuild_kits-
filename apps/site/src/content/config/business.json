@@ -15,6 +15,7 @@
 		{ "label": "Our Process", "href": "/process" },
 		{ "label": "Inclusions", "href": "/inclusions" },
 		{ "label": "Inspiration Gallery", "href": "/inspiration-gallery" },
+		{ "label": "Testimonials", "href": "/testimonials" },
 		{ "label": "Get Started", "href": "/get-started" }
 	],
 	"footerNav": [

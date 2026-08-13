@@ -1,4 +1,5 @@
 {
+	"_todo": "The old site said '50-year BlueScope steel warranty' in trustStrip and the 'warranty' array below. Confirm the real, current warranty terms with business owner, then replace the neutral wording in both places - do not just restore '50-year' unless it's still accurate.",
 	"trustStrip": [
 		"Structural steel frame system",
 		"Manufacturer-backed steel warranty",

@@ -1,8 +1,11 @@
 ---
-// Pricing figures from the old site conflicted with each other ($495 here
-// vs "from $1,500" on the old Inquiry page) and were never confirmed, so
-// this component only shows package/configuration structure - real business
-// content - and never displays a dollar amount. See docs/rebuild-plan.md.
+// TODO(business): pricing figures from the old site conflicted with each
+// other ($495 here vs "from $1,500" on the old Inquiry page) and were never
+// confirmed, so this component only shows package/configuration structure -
+// real business content, kept - and never displays a dollar amount. The raw
+// prices are still in content/config/design-packages.json (untouched, just
+// unused here) - once you confirm real pricing, wire it back in below.
+// See docs/rebuild-plan.md.
 import { getDesignPackages } from '../lib/content';
 
 const { packages } = await getDesignPackages();
