@@ -1,0 +1,230 @@
+---
+// Submits directly to PocketBase's public REST API (createRule: "" on the
+// `inquiries` collection allows anonymous create; list/view/update are
+// admin-only — see apps/pocketbase/pb_migrations). PUBLIC_POCKETBASE_URL
+// must be set at build/deploy time.
+const australianStates = [
+	'New South Wales',
+	'Victoria',
+	'Queensland',
+	'South Australia',
+	'Western Australia',
+	'Tasmania',
+	'Northern Territory',
+	'Australian Capital Territory',
+];
+
+const pathwayOptions = [
+	'Bring Your Own Design',
+	'Browse Our Range',
+	'Browse Our Range - Purchase As-Is',
+	'Browse Our Range - Customisation',
+	'Custom Design Service',
+	'Other',
+];
+
+const budgetRanges = [
+	'Under $100,000',
+	'$100,000 - $200,000',
+	'$200,000 - $300,000',
+	'$300,000 - $500,000',
+	'$500,000+',
+	'Prefer not to say',
+];
+---
+
+<form id="inquiry-form" class="space-y-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm md:p-8">
+	<div id="inquiry-success" class="hidden flex-col items-center gap-3 py-10 text-center">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-14 w-14 text-emerald-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+		<h3 class="text-xl font-bold text-ink-900">Inquiry Submitted Successfully</h3>
+		<p class="text-ink-500">We'll be in touch within 24-48 hours.</p>
+	</div>
+
+	<div id="inquiry-fields" class="space-y-6">
+		<div id="inquiry-error" class="hidden rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"></div>
+
+		<input type="hidden" name="selectedPlan" id="inquiry-selected-plan" />
+		<input type="hidden" name="pathwaySource" id="inquiry-pathway" />
+
+		<div class="grid gap-6 sm:grid-cols-2">
+			<div>
+				<label for="clientName" class="mb-1.5 block text-sm font-medium text-ink-700">Full Name *</label>
+				<input id="clientName" name="clientName" type="text" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500" />
+			</div>
+			<div>
+				<label for="email" class="mb-1.5 block text-sm font-medium text-ink-700">Email *</label>
+				<input id="email" name="email" type="email" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500" />
+			</div>
+		</div>
+
+		<div class="grid gap-6 sm:grid-cols-2">
+			<div>
+				<label for="phone" class="mb-1.5 block text-sm font-medium text-ink-700">Phone *</label>
+				<input id="phone" name="phone" type="tel" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500" />
+			</div>
+			<div>
+				<label for="siteLocation" class="mb-1.5 block text-sm font-medium text-ink-700">Site Location / State</label>
+				<select id="siteLocation" name="siteLocation" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500">
+					<option value="">Select a state</option>
+					{australianStates.map((s) => <option value={s}>{s}</option>)}
+				</select>
+			</div>
+		</div>
+
+		<div>
+			<label for="projectBrief" class="mb-1.5 block text-sm font-medium text-ink-700">Tell us about your project *</label>
+			<textarea id="projectBrief" name="projectBrief" required rows="5" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"></textarea>
+		</div>
+
+		<div class="grid gap-6 sm:grid-cols-2">
+			<div>
+				<label for="budgetRange" class="mb-1.5 block text-sm font-medium text-ink-700">Budget Range</label>
+				<select id="budgetRange" name="budgetRange" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500">
+					<option value="">Select a range</option>
+					{budgetRanges.map((b) => <option value={b}>{b}</option>)}
+				</select>
+			</div>
+			<div>
+				<label for="pathwaySelect" class="mb-1.5 block text-sm font-medium text-ink-700">How would you like to proceed?</label>
+				<select id="pathwaySelect" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500">
+					<option value="">Select an option</option>
+					{pathwayOptions.map((p) => <option value={p}>{p}</option>)}
+				</select>
+			</div>
+		</div>
+
+		<div>
+			<label for="timeline" class="mb-1.5 block text-sm font-medium text-ink-700">Target Timeline</label>
+			<input id="timeline" name="timeline" type="date" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500" />
+		</div>
+
+		<div>
+			<label for="additionalNotes" class="mb-1.5 block text-sm font-medium text-ink-700">Additional Notes</label>
+			<textarea id="additionalNotes" name="additionalNotes" rows="3" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"></textarea>
+		</div>
+
+		<div>
+			<label for="filesUploaded" class="mb-1.5 block text-sm font-medium text-ink-700">
+				Upload plans or sketches <span class="font-normal text-ink-400">(optional, up to 3 files, 10MB each)</span>
+			</label>
+			<input
+				id="filesUploaded"
+				name="filesUploaded"
+				type="file"
+				multiple
+				accept=".pdf,.jpg,.jpeg,.png,.xls,.xlsx,.dwg"
+				class="w-full rounded-lg border border-dashed border-ink-300 px-4 py-3 text-sm text-ink-600 file:mr-4 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-700"
+			/>
+		</div>
+
+		<button
+			id="inquiry-submit"
+			type="submit"
+			class="btn-primary w-full py-4 text-lg"
+		>
+			<span id="inquiry-submit-label">Submit Inquiry</span>
+		</button>
+	</div>
+</form>
+
+<script>
+	const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || '';
+
+	const form = document.getElementById('inquiry-form') as HTMLFormElement;
+	const fieldsWrap = document.getElementById('inquiry-fields') as HTMLDivElement;
+	const successWrap = document.getElementById('inquiry-success') as HTMLDivElement;
+	const errorBox = document.getElementById('inquiry-error') as HTMLDivElement;
+	const submitBtn = document.getElementById('inquiry-submit') as HTMLButtonElement;
+	const submitLabel = document.getElementById('inquiry-submit-label') as HTMLSpanElement;
+	const selectedPlanInput = document.getElementById('inquiry-selected-plan') as HTMLInputElement;
+	const pathwayHiddenInput = document.getElementById('inquiry-pathway') as HTMLInputElement;
+	const pathwaySelect = document.getElementById('pathwaySelect') as HTMLSelectElement;
+	const projectBrief = document.getElementById('projectBrief') as HTMLTextAreaElement;
+	const filesInput = document.getElementById('filesUploaded') as HTMLInputElement;
+
+	// Pre-fill from ?plan= and ?pathway= query params (used by floor plan /
+	// packages CTAs), same behaviour as the previous React inquiry form.
+	const params = new URLSearchParams(window.location.search);
+	const plan = params.get('plan');
+	const pathway = params.get('pathway');
+	if (plan) {
+		selectedPlanInput.value = plan;
+		if (!projectBrief.value) {
+			projectBrief.value = `I am interested in the ${plan} floor plan.\n\n`;
+		}
+	}
+	if (pathway) {
+		pathwayHiddenInput.value = pathway;
+		if ([...pathwaySelect.options].some((o) => o.value === pathway)) {
+			pathwaySelect.value = pathway;
+		}
+	}
+
+	pathwaySelect.addEventListener('change', () => {
+		pathwayHiddenInput.value = pathwaySelect.value;
+	});
+
+	function showError(message: string) {
+		errorBox.textContent = message;
+		errorBox.classList.remove('hidden');
+	}
+
+	function clearError() {
+		errorBox.classList.add('hidden');
+		errorBox.textContent = '';
+	}
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		clearError();
+
+		const files = filesInput.files ? Array.from(filesInput.files) : [];
+		if (files.length > 3) {
+			showError('You can only upload a maximum of 3 files.');
+			return;
+		}
+		for (const file of files) {
+			if (file.size > 10 * 1024 * 1024) {
+				showError(`${file.name} exceeds the 10MB limit.`);
+				return;
+			}
+		}
+
+		if (!POCKETBASE_URL) {
+			showError('This form is not connected to a backend yet (PUBLIC_POCKETBASE_URL is not set).');
+			return;
+		}
+
+		submitBtn.disabled = true;
+		submitLabel.textContent = 'Submitting...';
+
+		try {
+			const formData = new FormData(form);
+			// selectedPlan is informational only — fold it into the brief like the old form did,
+			// PocketBase's inquiries schema has no selectedPlan field of its own.
+			if (selectedPlanInput.value) {
+				formData.set('projectBrief', `Selected Plan: ${selectedPlanInput.value}\n\n${projectBrief.value}`);
+			}
+			formData.delete('selectedPlan');
+
+			const res = await fetch(`${POCKETBASE_URL}/api/collections/inquiries/records`, {
+				method: 'POST',
+				body: formData,
+			});
+
+			if (!res.ok) {
+				const err = await res.json().catch(() => ({}));
+				throw new Error(err.message || 'Failed to submit inquiry.');
+			}
+
+			fieldsWrap.classList.add('hidden');
+			successWrap.classList.remove('hidden');
+			successWrap.classList.add('flex');
+		} catch (err) {
+			showError(err instanceof Error ? err.message : 'Failed to submit inquiry. Please try again or contact us directly.');
+		} finally {
+			submitBtn.disabled = false;
+			submitLabel.textContent = 'Submit Inquiry';
+		}
+	});
+</script>

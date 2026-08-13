@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
+---
+
+<Layout
+	title="Inspiration Gallery - Synchro Build"
+	description="Explore completed custom homes built with Synchro Build's precision-engineered steel frame systems. Get inspired by real projects showcasing design freedom and quality craftsmanship."
+>
+	<section class="bg-gradient-to-br from-brand-600 to-indigo-700 py-16 text-white">
+		<div class="container-page mx-auto max-w-4xl text-center">
+			<h1 class="mb-6 text-5xl font-bold text-white md:text-6xl">Inspiration Gallery</h1>
+			<p class="text-xl text-brand-100">
+				Discover the possibilities of custom engineering. Each project showcases unique designs brought to life
+				with precision-crafted Truecore® steel frame systems.
+			</p>
+		</div>
+	</section>
+
+	<section class="section bg-ink-50">
+		<div class="container-page">
+			<div class="mb-12 flex flex-wrap justify-center gap-3" id="gallery-filters">
+				{
+					categories.map((cat) => (
+						<button
+							type="button"
+							data-filter={cat}
+							class:list={[
+								'filter-btn rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200',
+								cat === 'All' ? 'bg-brand-600 text-white shadow-md' : 'border border-ink-200 bg-white text-ink-600 hover:bg-ink-100',
+							]}
+							aria-pressed={cat === 'All'}
+						>
+							{cat}
+						</button>
+					))
+				}
+			</div>
+
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="gallery-grid">
+				{
+					projects.map((project) => (
+						<div class="gallery-item" data-category={project.data.category}>
+							<ProjectCard
+								image={project.data.image}
+								title={project.data.title}
+								category={project.data.category}
+								description={project.data.description}
+							/>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section bg-white">
+		<div class="container-page mx-auto max-w-4xl">
+			<div class="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-indigo-50 p-8 md:p-12">
+				<h2 class="mb-6 text-center text-3xl font-bold md:text-4xl">Your Design Could Be Next</h2>
+				<p class="mx-auto mb-8 max-w-2xl text-center text-lg text-ink-700">
+					These homes started as sketches and ideas, just like yours. With Synchro Build's custom engineering,
+					there are no limits to what you can create.
+				</p>
+				<div class="mb-8 grid gap-6 text-center md:grid-cols-3">
+					<div>
+						<div class="mb-2 text-4xl font-bold text-brand-600">100%</div>
+						<div class="text-ink-700">Custom Designs</div>
+					</div>
+					<div>
+						<div class="mb-2 text-4xl font-bold text-brand-600">500+</div>
+						<div class="text-ink-700">Projects Completed</div>
+					</div>
+					<div>
+						<div class="mb-2 text-4xl font-bold text-brand-600">5 Days</div>
+						<div class="text-ink-700">Technical Support</div>
+					</div>
+				</div>
+				<div class="text-center">
+					<a href="/get-started" class="btn-primary">Start Your Custom Project</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const items = document.querySelectorAll<HTMLDivElement>('.gallery-item');
+
+	filterButtons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const filter = btn.dataset.filter;
+
+			filterButtons.forEach((b) => {
+				b.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
+				b.classList.add('border', 'border-ink-200', 'bg-white', 'text-ink-600');
+				b.setAttribute('aria-pressed', 'false');
+			});
+			btn.classList.remove('border', 'border-ink-200', 'bg-white', 'text-ink-600');
+			btn.classList.add('bg-brand-600', 'text-white', 'shadow-md');
+			btn.setAttribute('aria-pressed', 'true');
+
+			items.forEach((item) => {
+				const matches = filter === 'All' || item.dataset.category === filter;
+				item.classList.toggle('hidden', !matches);
+			});
+		});
+	});
+</script>

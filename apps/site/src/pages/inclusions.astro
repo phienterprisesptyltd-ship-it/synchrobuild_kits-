@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getKitInclusions } from '../lib/content';
+
+const inclusions = await getKitInclusions();
+---
+
+<Layout
+	title="Kit Home Inclusions - Synchro Build"
+	description="Complete guide to what's included in Synchro Build kit homes. From steel framing to delivery, understand exactly what you receive in your custom-engineered building kit."
+>
+	<section class="bg-ink-900 py-24 text-white">
+		<div class="container-page mx-auto max-w-4xl text-center">
+			<h1 class="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">Kit Home Inclusions</h1>
+			<p class="mx-auto max-w-2xl text-xl leading-relaxed text-ink-300">
+				A comprehensive guide to everything included in your custom-engineered building kit.
+			</p>
+		</div>
+	</section>
+
+	<div class="container-page relative z-20 mx-auto -mt-10 max-w-4xl pb-24">
+		<section class="mb-12 rounded-2xl border border-ink-200 bg-white p-8 shadow-lg md:p-10">
+			<h2 class="mb-6 text-2xl font-bold text-ink-900 md:text-3xl">1. Introduction</h2>
+			<p class="text-lg leading-relaxed font-medium text-ink-700">{inclusions.intro}</p>
+		</section>
+
+		<div class="mb-12 space-y-8">
+			{
+				inclusions.kitComponents.map((section: { id: string; title: string; items: string[] }, index: number) => (
+					<section class="rounded-2xl border border-ink-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+						<h2 class="mb-6 text-2xl font-bold text-ink-900">{index + 2}. {section.title}</h2>
+						<ul class="grid gap-4 sm:grid-cols-2">
+							{section.items.map((item: string) => (
+								<li class="flex items-start gap-3">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+									<span class="leading-relaxed text-ink-700">{item}</span>
+								</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</div>
+
+		<section class="mb-8 rounded-2xl border border-ink-200 bg-white p-8 shadow-sm">
+			<h2 class="mb-6 text-2xl font-bold text-ink-900">11. Design and Documentation</h2>
+			<ul class="space-y-4">
+				{
+					inclusions.designAndDoc.map((item: string) => (
+						<li class="flex items-start gap-3">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-indigo-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+							<span class="leading-relaxed text-ink-700">{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<section class="mb-12 rounded-2xl border border-ink-200 bg-white p-8 shadow-sm">
+			<h2 class="mb-6 text-2xl font-bold text-ink-900">12. Optional Upgrades</h2>
+			<ul class="space-y-4">
+				{
+					inclusions.optionalUpgrades.map((item: string) => (
+						<li class="flex items-start gap-3">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.007v.008H12v-.008ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+							<span class="leading-relaxed text-ink-700">{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<section class="rounded-2xl border border-red-100 bg-red-50 p-8 shadow-sm">
+			<h2 class="mb-6 text-2xl font-bold text-red-900">13. Common Exclusions Unless Quoted</h2>
+			<p class="mb-6 font-medium text-red-800">
+				The following items are typically NOT included in a standard Synchro Build kit unless specifically
+				quoted and agreed upon:
+			</p>
+			<ul class="grid gap-4 sm:grid-cols-2">
+				{
+					inclusions.commonExclusions.map((item: string) => (
+						<li class="flex items-start gap-3">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+							<span class="leading-relaxed text-red-900">{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</div>
+</Layout>

@@ -1,0 +1,13 @@
+{
+	"name": "Granny Flat",
+	"description": "A compact and efficient single-bedroom granny flat featuring contemporary architecture and modern design. Includes a convenient carport, spacious walk-in robe, and outdoor area for comfortable independent living.",
+	"type": "Residential",
+	"beds": 1,
+	"baths": 1,
+	"features": ["Carport", "Walk-in Robe", "Outdoor Area", "Modern Design", "Contemporary Architecture"],
+	"image": "https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/b96bb1ffd1b6e541ce7bc78c29b605d6.png",
+	"customImages": [
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/b96bb1ffd1b6e541ce7bc78c29b605d6.png",
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/addf409335e405b82bb0bd0fdb3ed4d1.png"
+	]
+}

@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSupplyOptions } from '../lib/content';
+
+const supplyOptions = await getSupplyOptions();
+---
+
+<Layout
+	title="Explore Supply Options - Synchro Build"
+	description="Discover our flexible supply solutions designed to match your build strategy, from structural lock-up kits to comprehensive lining packages."
+>
+	<section class="section text-center">
+		<div class="container-page mx-auto max-w-4xl">
+			<h1 class="mb-6 text-4xl font-extrabold md:text-5xl lg:text-6xl">Explore Supply Options</h1>
+			<p class="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-ink-600 md:text-xl">
+				Discover our flexible supply solutions designed to match your build strategy. From core structural
+				shells to comprehensive lock-up and lining inclusions.
+			</p>
+			<div class="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
+				{
+					supplyOptions.trustStrip.map((item: string) => (
+						<div class="card flex items-center gap-2 px-5 py-2.5 text-sm font-medium">
+							<span class="h-2 w-2 rounded-full bg-brand-600" />
+							{item}
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="container-page mb-24 max-w-5xl">
+		<div class="space-y-6">
+			{
+				supplyOptions.categories.map((category: { id: string; title: string; subtitle: string; inclusions?: string[]; upgrades?: string[]; support?: string[]; warranty?: string[] }) => (
+					<details class="card group px-4 open:ring-1 open:ring-brand-100 md:px-8" open={category.id === 'lock-up'}>
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-5 py-6 md:py-8">
+							<div class="text-left">
+								<h3 class="text-xl font-bold text-ink-900 md:text-2xl">{category.title}</h3>
+								<p class="mt-1 text-sm text-ink-500 md:text-base">{category.subtitle}</p>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 flex-shrink-0 text-ink-400 transition-transform group-open:rotate-180"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+						</summary>
+
+						<div class="pt-2 pb-8">
+							{category.inclusions && (
+								<div class="grid gap-10 md:grid-cols-2 lg:gap-16">
+									<div>
+										<h4 class="mb-5 flex items-center gap-3 text-lg font-bold text-ink-900">Typical Inclusions</h4>
+										<ul class="space-y-3">
+											{category.inclusions.map((item) => (
+												<li class="flex items-start gap-3 text-sm leading-relaxed text-ink-700 md:text-base">
+													<span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ink-300" />
+													{item}
+												</li>
+											))}
+										</ul>
+									</div>
+									{category.upgrades && (
+										<div>
+											<h4 class="mb-5 flex items-center gap-3 text-lg font-bold text-ink-900">Upgrade Options</h4>
+											<ul class="space-y-3">
+												{category.upgrades.map((item) => (
+													<li class="flex items-start gap-3 text-sm leading-relaxed text-ink-700 md:text-base">
+														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-1 h-4 w-4 flex-shrink-0 text-brand-600"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+														{item}
+													</li>
+												))}
+											</ul>
+										</div>
+									)}
+								</div>
+							)}
+
+							{category.support && (
+								<div class="rounded-2xl border border-ink-100 bg-ink-50/50 p-6 md:p-8">
+									<h4 class="mb-6 text-lg font-bold text-ink-900">Available Support &amp; Coordination</h4>
+									<ul class="grid gap-x-12 gap-y-4 md:grid-cols-2">
+										{category.support.map((item) => (
+											<li class="flex items-start gap-3 text-sm leading-relaxed text-ink-700 md:text-base">
+												<span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ink-300" />
+												{item}
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
+
+							{category.warranty && (
+								<ul class="max-w-3xl space-y-4">
+									{category.warranty.map((item) => (
+										<li class="flex items-start gap-3 text-sm leading-relaxed text-ink-700 md:text-base">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+											{item}
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
+					</details>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="container-page max-w-5xl pb-20">
+		<div class="mb-10 text-center md:text-left">
+			<h2 class="mb-4 flex items-center justify-center gap-3 text-3xl font-bold md:justify-start md:text-4xl">
+				<span class="rounded-xl bg-red-100 p-2 text-red-600">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6 md:h-8 md:w-8"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+				</span>
+				Common Exclusions
+			</h2>
+			<p class="mx-auto max-w-4xl text-lg leading-relaxed text-ink-600 md:mx-0">
+				To avoid surprises, it's important to know what is generally <strong class="text-ink-900">NOT included</strong>
+				in our standard material supply inclusions. The following items are typically managed by your local
+				builder, trades, or owner-builder directly:
+			</p>
+		</div>
+
+		<div class="card mb-8 p-6 md:p-10">
+			<ul class="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					supplyOptions.commonExclusions.map((item: string) => (
+						<li class="flex items-start gap-3 text-sm leading-tight text-ink-600 md:text-base">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+							<span>{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="flex items-start gap-4 rounded-xl border border-ink-100 bg-ink-50 p-6">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-6 w-6 flex-shrink-0 text-ink-500"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.007v.008H12v-.008ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+			<p class="text-sm text-ink-600 md:text-base">
+				<strong class="text-ink-900">Note:</strong> Items shown as "Upgrade Options" or "Optional Extras" above
+				can be added to your supply package for an additional cost — just ask for a written quote.
+			</p>
+		</div>
+	</section>
+</Layout>

@@ -1,0 +1,241 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import FloorPlanCard from '../../components/FloorPlanCard.astro';
+
+export async function getStaticPaths() {
+	const floorPlans = await getCollection('floorPlans');
+	return floorPlans.map((plan) => ({
+		params: { slug: plan.id },
+		props: { plan },
+	}));
+}
+
+const { plan } = Astro.props;
+const allPlans = await getCollection('floorPlans');
+
+const relatedPlans = allPlans.filter((p) => p.id !== plan.id && p.data.type === plan.data.type).slice(0, 3);
+if (relatedPlans.length < 3) {
+	const additional = allPlans.filter((p) => p.id !== plan.id && !relatedPlans.includes(p));
+	relatedPlans.push(...additional.slice(0, 3 - relatedPlans.length));
+}
+
+const galleryImages = plan.data.customImages.length > 0 ? plan.data.customImages : [plan.data.image];
+const defaultFeatures = [
+	'Premium Truecore® steel frame construction',
+	'Termite and borer proof structural integrity',
+	'Precision CNC-cut components for perfect fit',
+	'Pre-drilled service holes for plumbing/electrical',
+	'High energy efficiency potential',
+	'Customisable roof pitch and ceiling heights',
+	'Engineered for specific wind and terrain ratings',
+	'Non-combustible structural materials',
+];
+const features = plan.data.features.length > 0 ? plan.data.features : defaultFeatures;
+
+const productJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Product',
+	name: plan.data.name,
+	description: plan.data.description,
+	image: galleryImages,
+	category: 'Kit Home Floor Plan',
+	brand: { '@type': 'Brand', name: 'Synchro Build' },
+};
+---
+
+<Layout title={`${plan.data.name} - Synchro Build`} description={plan.data.description} image={plan.data.image}>
+	<Fragment slot="head">
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(productJsonLd)} />
+	</Fragment>
+
+	<div class="border-b border-ink-200 bg-white">
+		<div class="container-page py-4">
+			<a href="/floor-plans" class="inline-flex items-center text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2 h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+				Back to Floor Plans
+			</a>
+		</div>
+	</div>
+
+	<div class="container-page py-10">
+		<div class="grid gap-12 lg:grid-cols-12">
+			<div class="space-y-8 lg:col-span-8">
+				<div class="overflow-hidden rounded-3xl border border-ink-200 bg-white p-2 shadow-sm">
+					<div class="relative flex min-h-[300px] items-center justify-center overflow-hidden rounded-2xl border border-ink-100 bg-ink-50 p-4 md:min-h-[500px] md:p-8" id="plan-gallery" data-images={JSON.stringify(galleryImages)}>
+						<img id="plan-gallery-image" src={galleryImages[0]} alt={plan.data.name} class="h-full max-h-[480px] w-full object-contain" />
+
+						{
+							galleryImages.length > 1 && (
+								<>
+									<button id="gallery-prev" aria-label="Previous image" class="absolute top-1/2 left-4 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink-700 shadow-md hover:bg-white">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+									</button>
+									<button id="gallery-next" aria-label="Next image" class="absolute top-1/2 right-4 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink-700 shadow-md hover:bg-white">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+									</button>
+								</>
+							)
+						}
+					</div>
+
+					{
+						galleryImages.length > 1 && (
+							<div class="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4">
+								{galleryImages.map((img: string, idx: number) => (
+									<button
+										class="gallery-thumb aspect-[4/3] overflow-hidden rounded-xl border-2 border-transparent bg-ink-50 transition-colors data-[active=true]:border-brand-500"
+										data-index={idx}
+										data-active={idx === 0}
+									>
+										<img src={img} alt={`View ${idx + 1}`} class="h-full w-full object-cover" />
+									</button>
+								))}
+							</div>
+						)
+					}
+				</div>
+
+				<div class="rounded-3xl border border-ink-200 bg-white p-6 shadow-sm md:p-8">
+					<h2 class="mb-4 text-2xl font-extrabold text-ink-900">About {plan.data.name}</h2>
+					<p class="mb-8 text-lg leading-relaxed text-ink-600">{plan.data.description}</p>
+					<div class="mb-8 flex items-start gap-4 rounded-2xl border border-brand-100 bg-brand-50 p-6">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-1 h-6 w-6 flex-shrink-0 text-brand-600"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+						<div>
+							<h3 class="mb-2 font-bold text-ink-900">Engineered to Australian Standards</h3>
+							<p class="text-sm leading-relaxed text-ink-600">
+								Every Synchro Build kit is manufactured using premium Truecore® steel and engineered to
+								comply strictly with AS 1684 and AS 4100. Backed by our 5-day technical support.
+							</p>
+						</div>
+					</div>
+
+					<h3 class="mb-4 text-xl font-extrabold text-ink-900">Key Features</h3>
+					<ul class="grid gap-4 sm:grid-cols-2">
+						{
+							features.map((feature: string) => (
+								<li class="flex items-start gap-3">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+									<span class="font-medium text-ink-700">{feature}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</div>
+
+			<div class="lg:col-span-4">
+				<div class="sticky top-28 space-y-6">
+					<div class="rounded-3xl border border-ink-200 bg-white p-6 shadow-lg md:p-8">
+						<span class="mb-4 inline-block rounded-full border border-ink-200 bg-ink-100 px-3 py-1 text-xs font-bold tracking-wider text-ink-600 uppercase">
+							{plan.data.type} Design
+						</span>
+						<h1 class="mb-6 text-3xl font-extrabold text-ink-900">{plan.data.name}</h1>
+
+						<div class="mb-8 grid grid-cols-3 gap-4 border-y border-ink-100 py-6 text-center">
+							<div>
+								<p class="text-xl font-bold text-ink-900">{plan.data.beds}</p>
+								<p class="text-[10px] font-bold tracking-wider text-ink-500 uppercase">Beds</p>
+							</div>
+							<div class="border-x border-ink-100">
+								<p class="text-xl font-bold text-ink-900">{plan.data.baths}</p>
+								<p class="text-[10px] font-bold tracking-wider text-ink-500 uppercase">Baths</p>
+							</div>
+							<div>
+								<p class="text-xl font-bold text-ink-900">{plan.data.squareMeters ?? 'TBA'}</p>
+								<p class="text-[10px] font-bold tracking-wider text-ink-500 uppercase">m&sup2;</p>
+							</div>
+						</div>
+
+						<div class="space-y-4">
+							<a href={`/get-started?plan=${encodeURIComponent(plan.data.name)}`} class="btn bg-ink-900 w-full py-4 text-white hover:bg-ink-800">
+								Get Started
+							</a>
+							<div class="relative py-2 text-center text-sm text-ink-400">
+								<span class="bg-white px-4">OR</span>
+								<div class="absolute inset-x-0 top-1/2 -z-10 border-t border-ink-200"></div>
+							</div>
+							<a
+								href={`/get-started?pathway=Browse Our Range - Customisation&plan=${encodeURIComponent(plan.data.name)}`}
+								class="btn-outline flex w-full flex-col gap-1 py-4"
+							>
+								<span class="flex items-center gap-2 font-bold">Request Custom Plan</span>
+								<span class="text-xs font-medium text-ink-500">Modify this layout to suit your needs</span>
+							</a>
+						</div>
+					</div>
+
+					<div class="rounded-3xl border border-ink-200 bg-white p-6 shadow-sm md:p-8">
+						<h3 class="mb-6 text-xl font-extrabold text-ink-900">Specifications</h3>
+						<dl class="space-y-4 text-sm">
+							<div class="flex items-center justify-between border-b border-ink-100 pb-4">
+								<dt class="font-medium text-ink-500">Total Area</dt>
+								<dd class="font-bold text-ink-900">{plan.data.squareMeters ?? 'TBA'} m&sup2;</dd>
+							</div>
+							<div class="flex items-center justify-between border-b border-ink-100 pb-4">
+								<dt class="font-medium text-ink-500">Bedrooms</dt>
+								<dd class="font-bold text-ink-900">{plan.data.beds}</dd>
+							</div>
+							<div class="flex items-center justify-between border-b border-ink-100 pb-4">
+								<dt class="font-medium text-ink-500">Bathrooms</dt>
+								<dd class="font-bold text-ink-900">{plan.data.baths}</dd>
+							</div>
+							<div class="flex items-center justify-between">
+								<dt class="font-medium text-ink-500">Material</dt>
+								<dd class="font-bold text-ink-900">Truecore® Steel</dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{
+		relatedPlans.length > 0 && (
+			<section class="section mt-10 border-t border-ink-200 bg-white">
+				<div class="container-page">
+					<div class="mb-10 flex items-center justify-between">
+						<h2 class="text-3xl font-extrabold text-ink-900">Similar Floor Plans</h2>
+						<a href="/floor-plans" class="hidden items-center font-bold text-brand-600 transition-colors hover:text-brand-700 sm:flex">
+							View All Plans
+						</a>
+					</div>
+					<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+						{relatedPlans.map((related) => (
+							<FloorPlanCard
+								slug={related.id}
+								name={related.data.name}
+								type={related.data.type}
+								beds={related.data.beds}
+								baths={related.data.baths}
+								image={related.data.image}
+								features={related.data.features}
+							/>
+						))}
+					</div>
+				</div>
+			</section>
+		)
+	}
+</Layout>
+
+<script>
+	const galleryEl = document.getElementById('plan-gallery');
+	const images: string[] = JSON.parse(galleryEl?.getAttribute('data-images') || '[]');
+	const imageEl = document.getElementById('plan-gallery-image') as HTMLImageElement | null;
+	const thumbs = document.querySelectorAll<HTMLButtonElement>('.gallery-thumb');
+	const prevBtn = document.getElementById('gallery-prev');
+	const nextBtn = document.getElementById('gallery-next');
+	let index = 0;
+
+	function show(newIndex: number) {
+		index = (newIndex + images.length) % images.length;
+		if (imageEl) imageEl.src = images[index];
+		thumbs.forEach((t) => t.setAttribute('data-active', String(Number(t.dataset.index) === index)));
+	}
+
+	prevBtn?.addEventListener('click', () => show(index - 1));
+	nextBtn?.addEventListener('click', () => show(index + 1));
+	thumbs.forEach((t) => t.addEventListener('click', () => show(Number(t.dataset.index))));
+</script>

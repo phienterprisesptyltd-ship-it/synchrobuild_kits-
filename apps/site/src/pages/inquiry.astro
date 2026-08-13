@@ -1,0 +1,8 @@
+---
+// The old site had two near-duplicate pages (GetStartedPage and InquiryPage)
+// wrapping the same form. Consolidated into one canonical page at
+// /get-started; this route redirects to avoid duplicate-content SEO issues
+// while preserving any existing inbound links/bookmarks and query params
+// (?plan=, ?pathway=).
+return Astro.redirect(`/get-started${Astro.url.search}`, 301);
+---

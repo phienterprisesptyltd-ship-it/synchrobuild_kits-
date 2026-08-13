@@ -1,0 +1,21 @@
+{
+	"name": "Elevated Contemporary 4BR",
+	"description": "A stunning modern home featuring an elevated steel-frame design, expansive open-plan living, and dual timber decks for seamless indoor-outdoor entertaining.",
+	"type": "Residential",
+	"beds": 4,
+	"baths": 2,
+	"features": [
+		"Elevated steel-frame design",
+		"Open-plan living and dining",
+		"Bifold doors to dual decks",
+		"Master suite with ensuite",
+		"Modern kitchen",
+		"Timber decking",
+		"Verandah with railings"
+	],
+	"image": "https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/49d0a7d19917f52ea819b687d03c9fd5.png",
+	"customImages": [
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/49d0a7d19917f52ea819b687d03c9fd5.png",
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/59954d5f4b3fae6ab727633f26ef69e9.png"
+	]
+}

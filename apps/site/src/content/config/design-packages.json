@@ -1,0 +1,9 @@
+{
+	"extraRoomRate": 30,
+	"comparableDraftspersonPrice": 2500,
+	"packages": [
+		{ "key": "1br", "title": "1 Bedroom", "beds": 1, "baths": 1, "cars": "1", "price": 395, "popular": false },
+		{ "key": "2br", "title": "2 Bedroom", "beds": 2, "baths": 1, "cars": "1-2", "price": 445, "popular": false },
+		{ "key": "3br", "title": "3 Bedroom", "beds": 3, "baths": 2, "cars": "2", "price": 495, "popular": true }
+	]
+}

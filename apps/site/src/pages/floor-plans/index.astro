@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import FloorPlanCard from '../../components/FloorPlanCard.astro';
+
+const floorPlans = await getCollection('floorPlans');
+---
+
+<Layout
+	title="Floor Plans - Synchro Build"
+	description={`Explore our collection of ${floorPlans.length} unique pre-engineered floor plans. From granny flats to 4-bedroom homes, find the perfect layout for your next build.`}
+>
+	<section class="relative overflow-hidden bg-ink-900 py-20 text-white">
+		<div class="container-page relative z-10 text-center">
+			<span class="mb-6 inline-block rounded-full border border-brand-500/30 bg-brand-500/20 px-3 py-1 text-sm font-bold tracking-wider text-brand-300 uppercase">
+				{floorPlans.length} Unique Designs
+			</span>
+			<h1 class="mb-6 text-4xl font-extrabold text-white md:text-6xl">Floor Plans Collection</h1>
+			<p class="mx-auto max-w-2xl text-lg leading-relaxed text-ink-300">
+				Discover our expanded collection of precision-engineered layouts. Designed for efficiency, built with
+				premium Truecore® steel, and ready for your site.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container-page">
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+				{
+					floorPlans.map((plan) => (
+						<FloorPlanCard
+							slug={plan.id}
+							name={plan.data.name}
+							type={plan.data.type}
+							beds={plan.data.beds}
+							baths={plan.data.baths}
+							image={plan.data.image}
+							features={plan.data.features}
+						/>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section border-t border-ink-200 bg-white">
+		<div class="container-page">
+			<div class="relative mx-auto flex max-w-5xl flex-col items-center gap-10 overflow-hidden rounded-3xl bg-ink-900 p-8 shadow-2xl md:flex-row md:p-12">
+				<div class="flex-shrink-0 rounded-2xl bg-brand-600 p-5 shadow-xl">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="h-10 w-10"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" /></svg>
+				</div>
+				<div>
+					<h2 class="mb-4 text-3xl font-bold text-white">Need something unique?</h2>
+					<p class="mb-8 max-w-2xl leading-relaxed text-ink-300">
+						You don't need to settle for a pre-designed plan. Our engineering team can work with your
+						existing sketches, architectural drawings, or custom ideas to engineer a solution tailored
+						specifically to your site and requirements.
+					</p>
+					<a href="/get-started?pathway=Custom Design Service" class="btn-primary">
+						Request Custom Plan
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

@@ -1,0 +1,13 @@
+{
+	"name": "Duplex Residence",
+	"description": "A compact two-level duplex residence featuring modern layout, efficient use of space with dedicated storage and laundry areas, and a practical staircase design for seamless multi-level living.",
+	"type": "Residential",
+	"beds": 2,
+	"baths": 1,
+	"features": ["Storage area", "Staircase", "Laundry area", "Multi-level design", "Modern layout"],
+	"image": "https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/c57c2b11f6e63f92fa94ce8f7e4e6187.png",
+	"customImages": [
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/201b6c6df594a4a4a40553820763a169.png",
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/c57c2b11f6e63f92fa94ce8f7e4e6187.png"
+	]
+}

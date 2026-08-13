@@ -1,0 +1,13 @@
+{
+	"name": "Modern Contemporary 3BR",
+	"description": "A sleek single-storey contemporary home featuring modern architecture, expansive glass sliding doors, and a welcoming verandah for indoor-outdoor living.",
+	"type": "Residential",
+	"beds": 3,
+	"baths": 2,
+	"features": ["Verandah", "Open-plan living/dining", "Large glass sliding doors", "Modern single-storey design", "Contemporary architecture"],
+	"image": "https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/961e33f0220fe9d557666399120d4430.png",
+	"customImages": [
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/961e33f0220fe9d557666399120d4430.png",
+		"https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/66e1e4aa52ac1d67ee74454ab6ac2532.png"
+	]
+}
