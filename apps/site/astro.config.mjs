@@ -10,12 +10,12 @@ export default defineConfig({
   site: 'https://www.synchrobuild.com.au',
   integrations: [
     sitemap({
-      // Exclude pages that should not be indexed. /testimonials and
-      // /inspiration-gallery are temporarily excluded until real customer
-      // testimonials / verified project photos replace the current
-      // placeholder content - see src/pages/testimonials.astro and
-      // src/pages/inspiration-gallery.astro.
-      filter: (page) => !page.includes('/404') && !page.includes('/testimonials') && !page.includes('/inspiration-gallery'),
+      // Exclude pages that should not be indexed. /testimonials is
+      // temporarily excluded until real customer testimonials replace the
+      // current placeholder content - see src/pages/testimonials.astro.
+      // /inspiration-gallery now renders genuine, business-approved
+      // project photos, so it's included again.
+      filter: (page) => !page.includes('/404') && !page.includes('/testimonials'),
     }),
   ],
   vite: {

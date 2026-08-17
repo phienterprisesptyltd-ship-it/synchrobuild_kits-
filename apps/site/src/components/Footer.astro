@@ -2,6 +2,7 @@
 interface Props {
 	business: {
 		name: string;
+		logo: string;
 		phone: string;
 		phoneHref: string;
 		emailGeneral: string;
@@ -19,12 +20,9 @@ const year = new Date().getFullYear();
 	<div class="container-page py-16">
 		<div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 			<div class="lg:col-span-2">
-				<!-- TODO(business): no real logo file exists yet - this is a text
-				     wordmark. Swap in a real logo image here (and in Header.astro)
-				     once you have one. -->
-				<p class="mb-6 text-2xl font-black tracking-tight text-white">
-					Synchro<span class="text-brand-400">Build</span> <span class="font-bold text-ink-300">Kits</span>
-				</p>
+				<div class="mb-6 inline-block rounded-xl bg-white p-4 shadow-sm">
+					<img src={business.logo} alt={`${business.name} logo`} class="h-16 w-auto object-contain md:h-20" />
+				</div>
 				<p class="mb-6 max-w-md text-sm text-ink-400">
 					100% custom-engineered building solutions with precision-crafted materials and nationwide delivery
 					across Australia.

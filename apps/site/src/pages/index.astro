@@ -37,35 +37,43 @@ const features = [
 			<div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/55"></div>
 		</div>
 
-		<!-- TODO(business): the old site had a specific "beat any quote by 8.8%"
-		     figure here. Not shown until you confirm it's a real, current offer -
-		     replace the paragraph below with the actual terms when ready. -->
-		<div class="absolute top-24 left-4 z-20 max-w-[300px] rounded-xl border border-white/20 bg-black/50 p-5 shadow-2xl backdrop-blur-md sm:left-6 lg:left-8">
-			<div class="mb-2 flex items-center gap-3">
-				<span class="rounded-full bg-brand-600 p-2 shadow-lg">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.941" /></svg>
-				</span>
-				<span class="text-lg font-black tracking-tight text-white uppercase">Price Promise</span>
-			</div>
-			<p class="text-base leading-snug font-semibold text-gray-100">
-				Contact us for current pricing and how it compares to other quotes you may have received.
-			</p>
-		</div>
+		<div class="relative z-10 w-full">
+			<div class="container-page flex flex-col lg:flex-row lg:items-center lg:gap-12 py-8 lg:py-0">
+				<!-- Price Promise Card: Side-by-side on desktop, stacked on mobile/tablet -->
+				<div class="flex-shrink-0 mb-8 lg:mb-0 lg:order-last">
+					<!-- TODO(business): the old site had a specific "beat any quote by 8.8%"
+					     figure here. Not shown until you confirm it's a real, current offer -
+					     replace the paragraph below with the actual terms when ready. -->
+					<div class="mx-auto w-full max-w-[320px] lg:max-w-none rounded-xl border border-white/20 bg-black/50 p-5 shadow-2xl backdrop-blur-md lg:w-80">
+						<div class="mb-2 flex items-center gap-3">
+							<span class="rounded-full bg-brand-600 p-2 shadow-lg flex-shrink-0">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.941" /></svg>
+							</span>
+							<span class="text-lg font-black tracking-tight text-white uppercase">Price Promise</span>
+						</div>
+						<p class="text-base leading-snug font-semibold text-gray-100">
+							Contact us for current pricing and how it compares to other quotes you may have received.
+						</p>
+					</div>
+				</div>
 
-		<div class="relative z-10 container-page pt-40 text-center">
-			<h1 class="mx-auto mb-6 max-w-4xl text-4xl font-extrabold text-white drop-shadow-lg md:text-6xl">
-				100% Custom-Engineered Building Kits
-			</h1>
-			<p class="mx-auto mb-8 max-w-3xl text-xl font-medium text-gray-100 drop-shadow-md md:text-2xl">
-				Transform your vision into reality with 100% custom-engineered building solutions. Precision-crafted
-				materials delivered nationwide.
-			</p>
-			<div class="flex flex-col justify-center gap-4 sm:flex-row">
-				<a href="/process" class="btn-primary px-8 py-4 text-lg shadow-xl">
-					Explore Our Process
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
-				</a>
-				<a href="/get-started" class="btn-secondary px-8 py-4 text-lg shadow-xl">Start Your Project</a>
+				<!-- Main Content: H1, paragraph, buttons -->
+				<div class="flex-1 text-center lg:text-left">
+					<h1 class="mx-auto lg:mx-0 mb-6 max-w-4xl text-4xl font-extrabold text-white drop-shadow-lg md:text-5xl lg:text-6xl">
+						100% Custom-Engineered Building Kits
+					</h1>
+					<p class="mx-auto lg:mx-0 mb-8 max-w-3xl text-xl font-medium text-gray-100 drop-shadow-md md:text-2xl">
+						Transform your vision into reality with 100% custom-engineered building solutions. Precision-crafted
+						materials delivered nationwide.
+					</p>
+					<div class="flex flex-col justify-center lg:justify-start gap-4 sm:flex-row">
+						<a href="/process" class="btn-primary px-8 py-4 text-lg shadow-xl">
+							Explore Our Process
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+						</a>
+						<a href="/get-started" class="btn-secondary px-8 py-4 text-lg shadow-xl">Start Your Project</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

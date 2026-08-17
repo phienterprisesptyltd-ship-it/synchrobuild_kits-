@@ -16,12 +16,11 @@ const floorPlans = defineCollection({
 	}),
 });
 
-// TODO(business): every entry here is currently `placeholder: true` - the
-// images are stock/AI-generated (horizons-cdn.hostinger.com), not photos of
-// real completed SynchroBuild projects. They are filtered out of every page
-// that renders this collection. When a real, verified project is available,
-// add a new entry (or edit an existing one) with placeholder: false, a real
-// project photo, and an accurate description.
+// These 15 entries are genuine SynchroBuild project photos migrated 1:1
+// from the business's existing live site (apps/web), confirmed approved by
+// the business owner - see docs/rebuild-plan.md §5. `placeholder` exists so
+// any future unverified entry can be added and safely hidden from public
+// pages/sitemap until confirmed, without needing a code change.
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
 	schema: z.object({
