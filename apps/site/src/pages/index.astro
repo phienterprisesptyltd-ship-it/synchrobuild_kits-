@@ -10,7 +10,7 @@ const designProcess = await getDesignProcess();
 
 const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
-	.filter((p) => p.data.featured)
+	.filter((p) => p.data.featured && !p.data.placeholder)
 	.sort((a, b) => a.data.order - b.data.order)
 	.slice(0, 3);
 
@@ -121,43 +121,49 @@ const features = [
 	</section>
 
 	<!-- Featured projects -->
-	<section class="section bg-ink-50">
-		<div class="container-page">
-			<div class="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
-				<div class="max-w-2xl">
-					<h2 class="mb-4 text-3xl font-bold md:text-4xl">Featured Projects</h2>
-					<p class="text-lg text-ink-600">
-						Explore a selection of our recently completed custom-engineered homes. Each project demonstrates
-						our commitment to precision, quality, and design freedom.
-					</p>
+	{
+		featuredProjects.length > 0 && (
+			<section class="section bg-ink-50">
+				<div class="container-page">
+					<div class="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
+						<div class="max-w-2xl">
+							<h2 class="mb-4 text-3xl font-bold md:text-4xl">Featured Projects</h2>
+							<p class="text-lg text-ink-600">
+								Explore a selection of our recently completed custom-engineered homes. Each project demonstrates
+								our commitment to precision, quality, and design freedom.
+							</p>
+						</div>
+						<a href="/inspiration-gallery" class="btn-outline flex-shrink-0">
+							View Full Gallery
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+							</svg>
+						</a>
+					</div>
+
+					<div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+						{featuredProjects.map((project) => (
+							<ProjectCard
+								image={project.data.image}
+								title={project.data.title}
+								category={project.data.category}
+								description={project.data.description}
+							/>
+						))}
+					</div>
+
+					<div class="text-center">
+						<a href="/get-started" class="btn-primary px-8 py-4 text-lg">
+							Start Your Design
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+							</svg>
+						</a>
+					</div>
 				</div>
-				<a href="/inspiration-gallery" class="btn-outline flex-shrink-0">
-					View Full Gallery
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
-				</a>
-			</div>
-
-			<div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{
-					featuredProjects.map((project) => (
-						<ProjectCard
-							image={project.data.image}
-							title={project.data.title}
-							category={project.data.category}
-							description={project.data.description}
-						/>
-					))
-				}
-			</div>
-
-			<div class="text-center">
-				<a href="/get-started" class="btn-primary px-8 py-4 text-lg">
-					Start Your Design
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
-				</a>
-			</div>
-		</div>
-	</section>
+			</section>
+		)
+	}
 
 	<!-- Philosophy -->
 	<section class="section bg-white">

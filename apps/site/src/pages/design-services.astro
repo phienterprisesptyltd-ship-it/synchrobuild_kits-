@@ -4,12 +4,47 @@ import DesignCalculator from '../components/DesignCalculator.astro';
 import { getDesignProcess } from '../lib/content';
 
 const designProcess = await getDesignProcess();
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{
+			'@type': 'ListItem',
+			position: 1,
+			name: 'Home',
+			item: new URL('/', Astro.site).toString(),
+		},
+		{
+			'@type': 'ListItem',
+			position: 2,
+			name: 'Design Services',
+			item: new URL('/design-services', Astro.site).toString(),
+		},
+	],
+};
 ---
 
 <Layout
 	title="Design Services - Synchro Build"
 	description="Custom design services from 1st principles. Based on your land, aspect, and features. Get architectural floor plans and 3D renders tailored to your block."
 >
+	<Fragment slot="head">
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} />
+	</Fragment>
+
+	<div class="border-b border-ink-100 bg-ink-50 py-6">
+		<div class="container-page">
+			<nav aria-label="Breadcrumb">
+				<ol class="flex items-center gap-2 text-sm">
+					<li><a href="/" class="text-brand-600 hover:text-brand-700">Home</a></li>
+					<li class="text-ink-400">/</li>
+					<li class="text-ink-600" aria-current="page">Design Services</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+
 	<main class="section pt-32">
 		<div class="container-page max-w-7xl">
 			<div class="mx-auto mb-24 max-w-4xl text-center">

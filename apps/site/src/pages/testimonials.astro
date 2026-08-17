@@ -3,16 +3,57 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 
-// TODO(business): all entries in src/content/testimonials/ are neutral
-// placeholders right now (placeholder: true). Replace with real customer
-// testimonials when available - see src/content.config.ts for the schema.
-const testimonials = await getCollection('testimonials');
+// Filter out placeholder testimonials; only show real customer feedback
+const allTestimonials = await getCollection('testimonials');
+const testimonials = allTestimonials.filter((t) => !t.data.placeholder);
+
+// TODO(business): temporary noindex while there are zero genuine
+// testimonials - this clears itself automatically once real entries exist
+// (placeholder: false in src/content/testimonials/), so no manual removal
+// is needed. Also excluded from the sitemap in astro.config.mjs; remove
+// that exclusion when real testimonials land.
+const hasRealTestimonials = testimonials.length > 0;
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{
+			'@type': 'ListItem',
+			position: 1,
+			name: 'Home',
+			item: new URL('/', Astro.site).toString(),
+		},
+		{
+			'@type': 'ListItem',
+			position: 2,
+			name: 'Testimonials',
+			item: new URL('/testimonials', Astro.site).toString(),
+		},
+	],
+};
 ---
 
 <Layout
 	title="Testimonials - Synchro Build"
 	description="Read what our clients have to say about their experience with Synchro Build's custom-engineered building kits and support."
+	robots={hasRealTestimonials ? undefined : 'noindex, follow'}
 >
+	<Fragment slot="head">
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} />
+	</Fragment>
+	<div class="border-b border-ink-100 bg-ink-50 py-6">
+		<div class="container-page">
+			<nav aria-label="Breadcrumb">
+				<ol class="flex items-center gap-2 text-sm">
+					<li><a href="/" class="text-brand-600 hover:text-brand-700">Home</a></li>
+					<li class="text-ink-400">/</li>
+					<li class="text-ink-600" aria-current="page">Testimonials</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+
 	<section class="relative flex min-h-[70vh] items-center justify-center overflow-hidden">
 		<div class="absolute inset-0">
 			<img
@@ -31,7 +72,7 @@ const testimonials = await getCollection('testimonials');
 				Built on Trust,<br />Engineered for Excellence
 			</h1>
 			<p class="mx-auto max-w-3xl text-xl font-medium text-gray-200 drop-shadow-md md:text-2xl">
-				Hear from the owner-builders and contractors who have worked with Synchro Build.
+				{testimonials.length > 0 ? 'Hear from the owner-builders and contractors who have worked with Synchro Build.' : 'Customer testimonials coming soon.'}
 			</p>
 		</div>
 	</section>

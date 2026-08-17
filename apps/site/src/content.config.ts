@@ -16,9 +16,16 @@ const floorPlans = defineCollection({
 	}),
 });
 
+// TODO(business): every entry here is currently `placeholder: true` - the
+// images are stock/AI-generated (horizons-cdn.hostinger.com), not photos of
+// real completed SynchroBuild projects. They are filtered out of every page
+// that renders this collection. When a real, verified project is available,
+// add a new entry (or edit an existing one) with placeholder: false, a real
+// project photo, and an accurate description.
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
 	schema: z.object({
+		placeholder: z.boolean().default(true),
 		title: z.string(),
 		category: z.enum(['Exterior', 'Interior', 'Construction']),
 		description: z.string(),

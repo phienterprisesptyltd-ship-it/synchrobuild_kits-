@@ -1,0 +1,8 @@
+# Robots.txt for SynchroBuild Kits
+# Allows all crawlers; references sitemap for efficient indexing
+
+User-agent: *
+Allow: /
+
+# Sitemap location for search engines and crawlers
+Sitemap: https://www.synchrobuild.com.au/sitemap-index.xml

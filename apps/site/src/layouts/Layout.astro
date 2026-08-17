@@ -10,9 +10,10 @@ interface Props {
 	description: string;
 	image?: string;
 	noindex?: boolean;
+	robots?: string;
 }
 
-const { title, description, image, noindex = false } = Astro.props;
+const { title, description, image, noindex = false, robots } = Astro.props;
 const business = await getBusiness();
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // No fallback image - there's no real logo/brand image yet (see task
@@ -43,7 +44,7 @@ const localBusinessJsonLd = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
-		{noindex && <meta name="robots" content="noindex,nofollow" />}
+		{robots ? <meta name="robots" content={robots} /> : noindex && <meta name="robots" content="noindex,nofollow" />}
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={business.name} />
