@@ -1,8 +1,8 @@
 ---
 // Talks to the existing apps/api /chat endpoints (already secured — see
 // apps/api/src/routes/chat.js and middleware/admin-auth.js on main).
-// PUBLIC_API_URL must be set at build/deploy time to point at that API;
-// defaults to a same-origin /api path for local development against a proxy.
+// Defaults to /hcgi/api for backward compatibility with the legacy hCGI
+// reverse proxy; can be overridden by setting PUBLIC_API_URL at build/deploy time.
 ---
 
 <div id="chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
@@ -63,7 +63,7 @@
 </div>
 
 <script>
-	const API_BASE = import.meta.env.PUBLIC_API_URL || '/api';
+	const API_BASE = import.meta.env.PUBLIC_API_URL || '/hcgi/api';
 
 	const panel = document.getElementById('chat-panel') as HTMLDivElement;
 	const toggle = document.getElementById('chat-toggle') as HTMLButtonElement;

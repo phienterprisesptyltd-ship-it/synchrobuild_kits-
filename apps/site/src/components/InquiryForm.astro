@@ -1,8 +1,9 @@
 ---
-// Submits directly to PocketBase's public REST API (createRule: "" on the
+// Submits to PocketBase's public REST API (createRule: "" on the
 // `inquiries` collection allows anonymous create; list/view/update are
-// admin-only — see apps/pocketbase/pb_migrations). PUBLIC_POCKETBASE_URL
-// must be set at build/deploy time.
+// admin-only — see apps/pocketbase/pb_migrations). Defaults to /hcgi/platform
+// for backward compatibility with the legacy hCGI reverse proxy; can be
+// overridden by setting PUBLIC_POCKETBASE_URL at build/deploy time.
 const australianStates = [
 	'New South Wales',
 	'Victoria',
@@ -128,7 +129,7 @@ const budgetRanges = [
 </form>
 
 <script>
-	const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || '';
+	const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || '/hcgi/platform';
 
 	const form = document.getElementById('inquiry-form') as HTMLFormElement;
 	const fieldsWrap = document.getElementById('inquiry-fields') as HTMLDivElement;
@@ -190,10 +191,6 @@ const budgetRanges = [
 			}
 		}
 
-		if (!POCKETBASE_URL) {
-			showError('This form is not connected to a backend yet (PUBLIC_POCKETBASE_URL is not set).');
-			return;
-		}
 
 		submitBtn.disabled = true;
 		submitLabel.textContent = 'Submitting...';
