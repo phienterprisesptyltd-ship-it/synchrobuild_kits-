@@ -111,11 +111,14 @@
 	async function fetchMessages() {
 		try {
 			const res = await fetch(`${API_BASE}/chat/messages?sessionId=${sessionId}`);
-			if (!res.ok) return;
+			if (!res.ok) {
+				// Unsuccessful response — silently skip and retry on next poll tick
+				return;
+			}
 			const data = await res.json();
 			if (Array.isArray(data)) renderMessages(data);
 		} catch {
-			// Network hiccup — the next poll tick will retry.
+			// Network error — the next poll tick will retry.
 		}
 	}
 
@@ -174,16 +177,21 @@
 		e.preventDefault();
 		const message = messageInput.value.trim();
 		if (!message) return;
-		messageInput.value = '';
 		try {
-			await fetch(`${API_BASE}/chat/messages`, {
+			const res = await fetch(`${API_BASE}/chat/messages`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ sessionId, message, senderType: 'customer', customerName }),
 			});
+			if (!res.ok) {
+				// Request failed — keep message in input for user to retry
+				return;
+			}
+			// Success — clear input and fetch updated messages
+			messageInput.value = '';
 			fetchMessages();
 		} catch {
-			messageInput.value = message;
+			// Network error — keep message in input for user to retry
 		}
 	});
 </script>
