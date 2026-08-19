@@ -1,0 +1,124 @@
+{
+	"intro": "Final inclusions are confirmed in your written quote. This guide provides a comprehensive overview of what is typically supplied in a Synchro Build kit. Every project is unique, and your final quotation will detail the exact materials, specifications, and services included based on your custom design and requirements.",
+	"kitComponents": [
+		{
+			"id": "steel-frame",
+			"title": "Steel Frame Kit",
+			"items": [
+				"Truecore® steel wall studs and tracks",
+				"Noggings and bracing as per engineering",
+				"All structural steel components for load-bearing walls",
+				"Pre-punched service holes for electrical and plumbing",
+				"Structural beams, lintels, and portal frames (if applicable)"
+			]
+		},
+		{
+			"id": "roof-system",
+			"title": "Roof System",
+			"items": [
+				"Truecore® steel roof trusses or rafters",
+				"Ridge beams, purlins, and battens",
+				"Colorbond® roof sheeting",
+				"Ridge capping, barge, and gable trim",
+				"Gutter and downpipe materials"
+			]
+		},
+		{
+			"id": "external-cladding",
+			"title": "External Wall Cladding",
+			"items": [
+				"Choice of Colorbond® steel cladding or James Hardie® fiber cement",
+				"Corner trims and joining profiles",
+				"Flashings and weather seals",
+				"All required fixing screws and accessories"
+			]
+		},
+		{
+			"id": "windows-doors",
+			"title": "Windows and External Doors",
+			"items": [
+				"Aluminum-framed windows (standard series)",
+				"Sliding or hinged external doors",
+				"Flyscreens for all openable windows",
+				"Door hardware (handles, locks, hinges)",
+				"Window and door flashings"
+			]
+		},
+		{
+			"id": "insulation-wraps",
+			"title": "Insulation and Wraps",
+			"items": [
+				"Wall wrap/building wrap",
+				"Roof sarking/reflective foil",
+				"Moisture barrier membranes",
+				"Tapes and sealants for weather-tightness",
+				"Wall and ceiling insulation batts (R-value as per NCC requirements)"
+			]
+		},
+		{
+			"id": "internal-lining",
+			"title": "Internal Lining Kit",
+			"items": [
+				"Plasterboard sheets (standard or fire-rated as required)",
+				"Cornice and ceiling battens",
+				"Joining compounds and tapes",
+				"Fixing screws and accessories"
+			]
+		},
+		{
+			"id": "internal-doors-trims",
+			"title": "Internal Doors and Trims",
+			"items": [
+				"Hollow-core or solid-core internal doors",
+				"Door frames and architraves",
+				"Door handles, hinges, and latches",
+				"Skirting boards and window sills",
+				"Finishing nails and adhesives"
+			]
+		},
+		{
+			"id": "robes-cupboards",
+			"title": "Robes and Cupboards",
+			"items": [
+				"Basic robe shelving and hanging rails",
+				"Linen cupboard shelving",
+				"Pantry shelving (if specified)",
+				"Melamine or similar finish materials"
+			]
+		},
+		{
+			"id": "steel-floor",
+			"title": "Steel Floor System",
+			"items": [
+				"Truecore® steel floor joists and bearers",
+				"Subfloor bracing and noggings",
+				"Structural steel posts and footings brackets",
+				"Particle board or plywood flooring substrate",
+				"Moisture-resistant sheeting for wet areas"
+			]
+		}
+	],
+	"designAndDoc": [
+		"Structural engineering calculations and certifications (Form 15)",
+		"Wind and load engineering to Australian standards",
+		"Detailed assembly plans and installation manuals",
+		"Comprehensive material quantification list",
+		"5-day technical support during construction"
+	],
+	"optionalUpgrades": [
+		"Bushfire Attack Level (BAL) rated materials and construction",
+		"Cyclonic wind rating upgrades for high-wind zones",
+		"Site-specific engineering for sloping or difficult sites",
+		"Upgraded cladding profiles or architectural features",
+		"Double-glazed windows and upgraded insulation packages"
+	],
+	"commonExclusions": [
+		"Site clearing, excavation, earthworks, and retaining walls",
+		"Concrete footings, slab, and concrete pumping",
+		"Construction labor, trades, crane hire, and scaffolding",
+		"Plumbing, electrical, HVAC, and gas installations",
+		"Kitchen cabinetry, bathroom vanities, and appliances",
+		"Floor coverings, painting, and tiling",
+		"Council application fees, soil tests, and utility connections"
+	]
+}

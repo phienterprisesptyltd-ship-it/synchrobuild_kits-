@@ -1,0 +1,63 @@
+---
+interface Props {
+	slug: string;
+	name: string;
+	type: string;
+	beds: number;
+	baths: number;
+	image: string;
+	features: string[];
+}
+
+const { slug, name, type, beds, baths, image, features } = Astro.props;
+---
+
+<a
+	href={`/floor-plans/${slug}`}
+	class="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl"
+>
+	<div class="relative h-64 flex-shrink-0 overflow-hidden border-b border-ink-100 bg-ink-100">
+		<img
+			src={image}
+			alt={name}
+			loading="lazy"
+			class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+		/>
+		<span class="absolute top-4 right-4 rounded-full border border-ink-200 bg-white/95 px-3 py-1.5 text-xs font-bold tracking-wide text-ink-800 uppercase shadow-sm">
+			{type}
+		</span>
+	</div>
+
+	<div class="flex flex-grow flex-col p-6">
+		<h3 class="mb-2 line-clamp-1 text-xl font-bold text-ink-900 transition-colors group-hover:text-brand-600">
+			{name}
+		</h3>
+		<div class="mb-3 flex flex-wrap gap-2">
+			{
+				features.slice(0, 2).map((feature) => (
+					<span class="inline-flex items-center rounded-md bg-ink-100 px-2 py-1 text-[10px] font-medium text-ink-600">
+						{feature}
+					</span>
+				))
+			}
+		</div>
+
+		<div class="mt-auto grid grid-cols-2 gap-2 border-y border-ink-100 py-4">
+			<div class="flex flex-col items-center text-center">
+				<span class="text-sm font-bold text-ink-900">{beds}</span>
+				<span class="text-[10px] font-medium tracking-wider text-ink-500 uppercase">Beds</span>
+			</div>
+			<div class="flex flex-col items-center border-l border-ink-100 text-center">
+				<span class="text-sm font-bold text-ink-900">{baths}</span>
+				<span class="text-[10px] font-medium tracking-wider text-ink-500 uppercase">Baths</span>
+			</div>
+		</div>
+
+		<div class="mt-4 flex justify-end">
+			<span class="inline-flex items-center gap-2 rounded-xl bg-ink-900 px-4 py-2 text-sm font-medium text-white transition-colors group-hover:bg-brand-600">
+				Details
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+			</span>
+		</div>
+	</div>
+</a>

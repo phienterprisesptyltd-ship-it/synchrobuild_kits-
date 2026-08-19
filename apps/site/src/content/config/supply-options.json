@@ -1,0 +1,144 @@
+{
+	"_todo": "The old site said '50-year BlueScope steel warranty' in trustStrip and the 'warranty' array below. Confirm the real, current warranty terms with business owner, then replace the neutral wording in both places - do not just restore '50-year' unless it's still accurate.",
+	"trustStrip": [
+		"Structural steel frame system",
+		"Manufacturer-backed steel warranty",
+		"Engineered to NCC & AS standards"
+	],
+	"categories": [
+		{
+			"id": "lock-up",
+			"title": "Lock-Up Kit Inclusions",
+			"subtitle": "The essential weatherproof structural shell.",
+			"inclusions": [
+				"Lightweight steel wall frames",
+				"Steel roof framing/trusses/panels",
+				"Roof and ceiling battens",
+				"Structural steel components",
+				"N3 wind rating allowance",
+				"Structural fixings",
+				"Colorbond roof sheeting",
+				"Colorbond fascia and gutter",
+				"Roof flashings",
+				"External wall cladding allowance",
+				"External wall wrap/building wrap",
+				"Aluminium windows",
+				"Sliding glass doors",
+				"Standard external entry door",
+				"Window and door locks",
+				"Standard ceiling height allowance",
+				"Basic material layout and supply documentation",
+				"Engineering for structural steel frame system"
+			],
+			"upgrades": [
+				"Higher wind ratings",
+				"BAL-rated materials",
+				"Alternative roof profiles",
+				"Alternative cladding profiles",
+				"Larger windows and doors",
+				"Double glazing",
+				"Feature cladding",
+				"Higher ceiling heights"
+			]
+		},
+		{
+			"id": "lining",
+			"title": "Internal Lining Kit Inclusions",
+			"subtitle": "Insulation, plasterboard, doors, and internal trims.",
+			"inclusions": [
+				"Wall insulation allowance",
+				"Ceiling insulation allowance",
+				"Roof blanket or reflective foil insulation",
+				"Internal plasterboard wall linings",
+				"Ceiling plasterboard linings",
+				"Wet-area plasterboard",
+				"Plasterboard fixings and setting compounds",
+				"Internal hollow-core doors",
+				"Door jambs",
+				"Door hinges",
+				"Internal door levers",
+				"Cavity slider units",
+				"Architraves",
+				"Skirting boards",
+				"Cornice or square-set ceiling allowance",
+				"Robe and cupboard shelving supports",
+				"Chrome hanging rails",
+				"Linen cupboard shelving allowance"
+			],
+			"upgrades": [
+				"Higher insulation ratings",
+				"Acoustic insulation",
+				"Square-set ceilings",
+				"Feature internal doors",
+				"Higher-grade trims",
+				"Custom robe or storage layouts"
+			]
+		},
+		{
+			"id": "floor",
+			"title": "Steel Floor System Inclusions",
+			"subtitle": "Elevated sub-floor solutions for sloping or raised sites.",
+			"inclusions": [
+				"RHS steel bearers",
+				"Steel floor joists",
+				"Structural steel floor framing components",
+				"19mm structural flooring (Yellow Tongue or equivalent)",
+				"Wet-area tile underlay allowance",
+				"Floor system fixings",
+				"Engineering for steel floor system"
+			],
+			"upgrades": [
+				"Steel posts",
+				"Post tops and bottoms",
+				"Bracing components",
+				"Deck framing",
+				"Decking materials",
+				"Stairs",
+				"Balustrades"
+			]
+		},
+		{
+			"id": "support",
+			"title": "Design, Documentation & Support",
+			"subtitle": "Our commitment to getting your project approved and built.",
+			"support": [
+				"Review of preferred design or sketch",
+				"Standard plan modification",
+				"Preliminary design and quote package",
+				"Material scope preparation",
+				"Inclusions and exclusions schedule",
+				"Structural steel frame documentation",
+				"Engineering coordination",
+				"BAL upgrade discussion",
+				"BASIX/energy report coordination",
+				"Council or certifier document checklist",
+				"Owner-builder support checklist",
+				"Build-stage material supply guidance"
+			]
+		},
+		{
+			"id": "warranty",
+			"title": "Quality & Warranty",
+			"subtitle": "Australian-made materials, backed by manufacturer warranties.",
+			"warranty": [
+				"Manufacturer-backed steel structural warranty — ask us for current terms",
+				"Engineered to meet NCC and relevant AS standards",
+				"Premium Colorbond® steel components for durability",
+				"High-quality hardware and fixings included",
+				"Locally manufactured and precision-rolled materials",
+				"Comprehensive quality control checks before dispatch"
+			]
+		}
+	],
+	"commonExclusions": [
+		"Site works", "Excavation", "Concrete slab construction", "Piering/footings/groundworks",
+		"On-site labour", "Builder installation", "Crane/forklift/unloading equipment",
+		"Plumbing materials/labour", "Electrical materials/labour", "Waterproofing", "Tiling",
+		"Painting", "Floor coverings", "Kitchen joinery", "Bathroom joinery", "Laundry joinery",
+		"Appliances", "Tapware/sinks/sanitaryware", "Shower screens", "Wardrobe sliding doors",
+		"Garage doors", "Flyscreens", "Double glazing", "Internal/external stairs", "Balustrades",
+		"Decking", "Downpipes", "Council application fees", "Certifier fees", "Soil test", "Survey",
+		"Bushfire report", "BAL assessment", "BASIX/energy report", "Delivery",
+		"Delivery unloading costs", "Any item not specifically listed in written quote"
+	]
+}

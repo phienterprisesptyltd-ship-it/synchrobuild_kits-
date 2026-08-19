@@ -1,0 +1,26 @@
+---
+// The old site had two near-duplicate pages (GetStartedPage and InquiryPage)
+// wrapping the same form. Consolidated into one canonical page at
+// /get-started; this route redirects to avoid duplicate-content SEO issues
+// while preserving any existing inbound links/bookmarks and query params
+// (?plan=, ?pathway=).
+// Since this is a static build, use client-side redirect to preserve query string.
+const targetUrl = `/get-started${Astro.url.search}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content={`0; url=${targetUrl}`}>
+	<link rel="canonical" href={targetUrl}>
+	<title>Redirecting to Get Started</title>
+</head>
+<body>
+	<p><a href={targetUrl}>If you are not redirected automatically, click here to continue</a></p>
+	<script is:inline>
+		const target = window.location.pathname.replace(/\/inquiry\/?/, '/get-started') + window.location.search;
+		window.location.replace(target);
+	</script>
+</body>
+</html>

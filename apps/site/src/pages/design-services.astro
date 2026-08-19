@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DesignCalculator from '../components/DesignCalculator.astro';
+import { getDesignProcess } from '../lib/content';
+
+const designProcess = await getDesignProcess();
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{
+			'@type': 'ListItem',
+			position: 1,
+			name: 'Home',
+			item: new URL('/', Astro.site).toString(),
+		},
+		{
+			'@type': 'ListItem',
+			position: 2,
+			name: 'Design Services',
+			item: new URL('/design-services', Astro.site).toString(),
+		},
+	],
+};
+---
+
+<Layout
+	title="Design Services - Synchro Build"
+	description="Custom design services from 1st principles. Based on your land, aspect, and features. Get architectural floor plans and 3D renders tailored to your block."
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} />
+	</Fragment>
+
+	<div class="border-b border-ink-100 bg-ink-50 py-6">
+		<div class="container-page">
+			<nav aria-label="Breadcrumb">
+				<ol class="flex items-center gap-2 text-sm">
+					<li><a href="/" class="text-brand-600 hover:text-brand-700">Home</a></li>
+					<li class="text-ink-400">/</li>
+					<li class="text-ink-600" aria-current="page">Design Services</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+
+	<main class="section pt-32">
+		<div class="container-page max-w-7xl">
+			<div class="mx-auto mb-24 max-w-4xl text-center">
+				<h1 class="mb-8 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">Design Services</h1>
+				<div class="space-y-6">
+					<p class="text-xl font-semibold text-ink-800">We design what you want from 1st principles.</p>
+					<p class="text-lg text-ink-600">
+						Designs are based on the land it's going on, its aspect, its features and issues — not based on
+						other floor plans as a template.
+					</p>
+					<!-- TODO(business): old site said "You won't find a cheaper plan
+					     price anywhere else" - an absolute competitive claim we can't
+					     verify. Neutralized below. -->
+					<p class="rounded-xl border border-brand-100 bg-brand-50/50 p-5 text-lg text-ink-600">
+						We keep this efficient and effective through our interview process — contact us for current
+						design-service pricing.
+					</p>
+				</div>
+			</div>
+
+			<!-- TODO(business): pricing below intentionally omits dollar figures -
+			     see the calculator's own comment (DesignCalculator.astro) and
+			     docs/rebuild-plan.md for the $495-vs-$1,500 conflict this is
+			     pending on. -->
+			<div class="mx-auto mb-32 max-w-5xl">
+				<div class="mb-12 text-center">
+					<h2 class="mb-4 text-3xl font-bold md:text-4xl">Pricing &amp; Configuration</h2>
+					<p class="mx-auto max-w-2xl text-lg text-ink-600">
+						Select your base package and add extra rooms as needed. 100% of your design fee is credited when
+						you order your kit home — your design effectively costs $0.
+					</p>
+				</div>
+
+				<DesignCalculator />
+
+				<div class="mt-12 flex items-start gap-3 rounded-lg border border-brand-100 bg-brand-50 p-6">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-600"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" /></svg>
+					<p class="text-sm font-medium text-brand-800">
+						100% of your design fee is credited when you order your kit home — your design effectively costs
+						$0.
+					</p>
+				</div>
+
+				<div class="mt-8 flex justify-center gap-2 text-center text-[10px] font-bold tracking-wider text-ink-500 uppercase">
+					<div class="flex-1">7-day delivery</div>
+					<div class="flex-1">Unlimited minor revisions</div>
+					<div class="flex-1">Australian compliant</div>
+				</div>
+			</div>
+
+			<div class="mb-16">
+				<div class="mb-16 text-center">
+					<h2 class="mb-4 text-3xl font-bold md:text-4xl">{designProcess.heading}</h2>
+					<p class="text-lg text-ink-600">{designProcess.intro}</p>
+				</div>
+
+				<div class="mx-auto max-w-3xl space-y-12">
+					{
+						designProcess.steps.map((step: { id: string; title: string; description: string }) => (
+							<div class="flex items-start gap-6 md:gap-8">
+								<div class="flex-shrink-0 text-5xl leading-none font-black text-ink-200 tabular-nums md:text-6xl">
+									{step.id}
+								</div>
+								<div class="flex-grow rounded-2xl border border-ink-100 bg-ink-50 p-6 shadow-sm md:p-8">
+									<h3 class="mb-3 text-xl font-bold text-ink-900 md:text-2xl">{step.title}</h3>
+									<p class="text-ink-600 md:text-lg">{step.description}</p>
+								</div>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>

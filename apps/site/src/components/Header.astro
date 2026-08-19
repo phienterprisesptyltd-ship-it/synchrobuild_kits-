@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+	business: {
+		name: string;
+		logo: string;
+		phone: string;
+		phoneHref: string;
+		nav: { label: string; href: string }[];
+	};
+}
+
+const { business } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const allTestimonials = await getCollection('testimonials');
+const realTestimonials = allTestimonials.filter((t) => !t.data.placeholder);
+const hasRealTestimonials = realTestimonials.length > 0;
+
+const visibleNav = business.nav.filter((link) => link.href !== '/testimonials' || hasRealTestimonials);
+---
+
+<header class="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur-sm">
+	<nav class="container-page flex h-20 items-center justify-between md:h-24">
+		<a href="/" class="flex h-full items-center gap-3 py-2">
+			<img src={business.logo} alt={`${business.name} logo`} class="h-full w-auto object-contain" />
+			<span class="hidden flex-col sm:flex">
+				<span class="text-sm font-bold uppercase tracking-widest text-brand-600 leading-none">Family Owned</span>
+				<span class="mt-1 text-sm font-medium text-ink-500">Australian Built</span>
+			</span>
+		</a>
+
+		<div class="hidden items-center gap-5 lg:flex xl:gap-6">
+			{
+				visibleNav.map((link) => (
+					<a
+						href={link.href}
+						class:list={[
+							'relative text-sm font-semibold whitespace-nowrap transition-colors xl:text-base',
+							currentPath === link.href ? 'text-brand-600' : 'text-ink-700 hover:text-brand-600',
+						]}
+					>
+						{link.label}
+					</a>
+				))
+			}
+			<a
+				href={business.phoneHref}
+				class="ml-2 flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-700"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106a1.125 1.125 0 0 0-1.173.417l-.97 1.293a1.125 1.125 0 0 1-1.21.38 12.035 12.035 0 0 1-7.143-7.143 1.125 1.125 0 0 1 .38-1.21l1.293-.97a1.125 1.125 0 0 0 .417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+				<span>{business.phone}</span>
+			</a>
+		</div>
+
+		<div class="flex items-center gap-2 lg:hidden">
+			<a
+				href={business.phoneHref}
+				aria-label="Call us"
+				class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106a1.125 1.125 0 0 0-1.173.417l-.97 1.293a1.125 1.125 0 0 1-1.21.38 12.035 12.035 0 0 1-7.143-7.143 1.125 1.125 0 0 1 .38-1.21l1.293-.97a1.125 1.125 0 0 0 .417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+			</a>
+			<button
+				id="mobile-menu-toggle"
+				type="button"
+				aria-label="Toggle menu"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+				class="rounded-lg p-2 hover:bg-ink-100"
+			>
+				<svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-7 w-7 text-ink-900"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+				<svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden h-7 w-7 text-ink-900"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+			</button>
+		</div>
+	</nav>
+
+	<div id="mobile-menu" class="hidden border-t border-ink-100 bg-white shadow-xl lg:hidden">
+		<div class="container-page space-y-1 py-4">
+			{
+				visibleNav.map((link) => (
+					<a
+						href={link.href}
+						class:list={[
+							'block rounded-lg px-4 py-3 font-medium transition-colors',
+							currentPath === link.href ? 'bg-brand-50 text-brand-600' : 'text-ink-700 hover:bg-ink-50',
+						]}
+					>
+						{link.label}
+					</a>
+				))
+			}
+			<div class="mt-4 border-t border-ink-100 pt-4">
+				<a
+					href={business.phoneHref}
+					class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-3 font-semibold text-white shadow-md hover:bg-brand-700"
+				>
+					Call {business.phone}
+				</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script>
+	const toggle = document.getElementById('mobile-menu-toggle');
+	const menu = document.getElementById('mobile-menu');
+	const iconOpen = document.getElementById('menu-icon-open');
+	const iconClose = document.getElementById('menu-icon-close');
+
+	toggle?.addEventListener('click', () => {
+		const isOpen = menu?.classList.toggle('hidden') === false;
+		toggle.setAttribute('aria-expanded', String(isOpen));
+		iconOpen?.classList.toggle('hidden', isOpen);
+		iconClose?.classList.toggle('hidden', !isOpen);
+	});
+</script>

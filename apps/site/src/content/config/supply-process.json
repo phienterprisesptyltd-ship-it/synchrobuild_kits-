@@ -1,0 +1,68 @@
+{
+	"heading": "Our 5-Stage Supply Process",
+	"intro": "Your journey from initial design to complete building kit delivery. Every step engineered with precision, backed by expert support.",
+	"steps": [
+		{
+			"stage": 1,
+			"title": "Design",
+			"subtitle": "Design & Selection",
+			"description": "Your plans, our plans or choose/adapt one of our standard plans.",
+			"details": [
+				"Bring your own custom plans",
+				"Choose from our pre-engineered range",
+				"Adapt a standard plan to your needs",
+				"Initial design consultation"
+			]
+		},
+		{
+			"stage": 2,
+			"title": "Quotation",
+			"subtitle": "Pricing & Options",
+			"description": "We will quote your kit including any options you have selected.",
+			"details": [
+				"Comprehensive kit quotation",
+				"Inclusion of selected optional extras",
+				"Transparent pricing breakdown",
+				"Value engineering review"
+			]
+		},
+		{
+			"stage": 3,
+			"title": "Approval & Deposit",
+			"subtitle": "Documentation & DA",
+			"description": "A deposit is paid that releases all the council required docs such as engineering etc for your council DA process.",
+			"details": [
+				"Initial deposit payment",
+				"Release of engineering documentation",
+				"Support for council DA process",
+				"Compliance certification"
+			]
+		},
+		{
+			"stage": 4,
+			"title": "Manufacturing",
+			"subtitle": "Manufacturing & CC",
+			"description": "After council DA approval we will complete the docs required for CC and begin manufacturing.",
+			"details": [
+				"Completion of CC documentation",
+				"Precision CNC manufacturing",
+				"Truecore® steel framing fabrication",
+				"Quality assurance checks"
+			],
+			"image": "https://horizons-cdn.hostinger.com/0e3c4b12-5c30-4fff-a4c0-65b7e6df4b83/d12608438a7c0c1d337d4718230a7f62.jpg",
+			"imageCaption": "Precision manufacturing of your custom-engineered steel frames"
+		},
+		{
+			"stage": 5,
+			"title": "Delivery & Installation",
+			"subtitle": "Logistics & Handover",
+			"description": "Approx 4 to 8 weeks depending on complexity of the kit your kit will be delivered and final payment made.",
+			"details": [
+				"4 to 8 weeks manufacturing timeline",
+				"Nationwide site delivery coordination",
+				"Final payment processing",
+				"Comprehensive assembly manuals provided"
+			]
+		}
+	]
+}
