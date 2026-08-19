@@ -21,6 +21,7 @@
 	],
 	"footerNav": [
 		{ "label": "Home", "href": "/" },
+		{ "label": "Floor Plans", "href": "/floor-plans" },
 		{ "label": "Our Process", "href": "/process" },
 		{ "label": "Inspiration Gallery", "href": "/inspiration-gallery" },
 		{ "label": "Get Started", "href": "/get-started" }

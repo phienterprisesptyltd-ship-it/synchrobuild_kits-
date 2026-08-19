@@ -160,17 +160,32 @@
 		sendForm.classList.remove('hidden');
 	}
 
-	nameForm.addEventListener('submit', (e) => {
+	nameForm.addEventListener('submit', async (e) => {
 		e.preventDefault();
 		const name = nameInput.value.trim();
 		if (!name) return;
-		customerName = name;
-		localStorage.setItem('chatCustomerName', name);
-		nameGate.classList.add('hidden');
-		messagesEl.classList.remove('hidden');
-		messagesEl.classList.add('flex');
-		sendForm.classList.remove('hidden');
-		startPolling();
+		try {
+			// Create session on backend with customerName to avoid duplicates on retry
+			const res = await fetch(`${API_BASE}/chat/sessions`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ sessionId, customerName: name }),
+			});
+			if (!res.ok) {
+				// Session creation failed — don't proceed to messaging
+				return;
+			}
+			// Session created successfully — proceed to messaging
+			customerName = name;
+			localStorage.setItem('chatCustomerName', name);
+			nameGate.classList.add('hidden');
+			messagesEl.classList.remove('hidden');
+			messagesEl.classList.add('flex');
+			sendForm.classList.remove('hidden');
+			startPolling();
+		} catch {
+			// Network error during session creation — don't proceed
+		}
 	});
 
 	sendForm.addEventListener('submit', async (e) => {
