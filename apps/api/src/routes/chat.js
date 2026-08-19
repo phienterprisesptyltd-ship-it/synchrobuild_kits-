@@ -57,9 +57,9 @@ router.post('/sessions', async (req, res) => {
   }
 });
 
-// POST /chat/messages - Create chat message (requires existing session)
+// POST /chat/messages - Create chat message (supports lazy session creation for backward compatibility)
 router.post('/messages', async (req, res) => {
-  const { sessionId, message, senderType } = req.body;
+  const { sessionId, message, senderType, customerName } = req.body;
 
   // Validate: sessionId and message must be non-empty strings
   if (!sessionId || typeof sessionId !== 'string' || sessionId.trim() === '') {
@@ -73,16 +73,45 @@ router.post('/messages', async (req, res) => {
   logger.info(`Creating chat message - sessionId: ${sessionId}, senderType: ${senderType}`);
 
   try {
-    // Confirm session exists by looking up by sessionId field
+    // Look up session by sessionId field
     const sessionResult = await pb.collection('chat_sessions').getList(1, 1, {
       filter: 'sessionId="' + sessionId + '"',
     });
 
-    if (sessionResult.items.length === 0) {
-      return res.status(404).json({ error: 'Session not found. Create session first via POST /chat/sessions' });
-    }
+    let sessionRecordId;
 
-    const sessionRecordId = sessionResult.items[0].id;
+    if (sessionResult.items.length === 0) {
+      // Session doesn't exist - create it lazily for backward compatibility with older clients
+      // Validate customerName only when creating a new session
+      if (!customerName || typeof customerName !== 'string' || customerName.trim() === '') {
+        return res.status(400).json({ error: 'Missing or invalid required field: customerName (required when creating new session)' });
+      }
+
+      logger.info(`Lazily creating session for sessionId: ${sessionId}, customerName: ${customerName}`);
+
+      // Check again in case another request created it (idempotent)
+      const recheckSession = await pb.collection('chat_sessions').getList(1, 1, {
+        filter: 'sessionId="' + sessionId + '"',
+      });
+
+      if (recheckSession.items.length > 0) {
+        // Another request created it - use that session
+        sessionRecordId = recheckSession.items[0].id;
+        logger.info(`Session already created by concurrent request: ${sessionId}`);
+      } else {
+        // Create new session
+        const newSession = await pb.collection('chat_sessions').create({
+          sessionId,
+          customerName,
+          createdAt: new Date().toISOString(),
+          lastMessageAt: new Date().toISOString(),
+        });
+        sessionRecordId = newSession.id;
+        logger.info(`Session lazily created: ${sessionId}, recordId: ${sessionRecordId}`);
+      }
+    } else {
+      sessionRecordId = sessionResult.items[0].id;
+    }
 
     // Create message record
     const msgRecord = await pb.collection('chat_messages').create({
